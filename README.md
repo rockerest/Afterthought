@@ -1,7 +1,7 @@
 Aferthought is a php code repository to expediate setting up a new website.
 
-It relies heavily on [my framework](https://github.com/rockerest/myframework).
-You can see a demo of this package at [afterthought.thomasrandolph.info](http://afterthought.thomasrandolph.info).
+It relies heavily on [my framework](https://github.com/rockerest/myframework).  
+You can see a demo of this package at [afterthought.thomasrandolph.info](http://afterthought.thomasrandolph.info). Log in with username `admin@example.com` and password `password`.
 
 There are two files that you need that are not included in this repository for various reasons.
 
