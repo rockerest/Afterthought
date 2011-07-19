@@ -8,3 +8,5 @@ msgboxes.each(function( index ){
 		$( this ).fadeOut(3500);
 	}
 });
+
+log.binfo( 'Your user is registered as "John Doe" which is why you\'re greeted as "John" :D' );
