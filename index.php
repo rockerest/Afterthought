@@ -4,7 +4,7 @@
 	require_once('Page.php');
 	require_once('Template.php');
 
-	$page = new Page("Randolph Web Development Project Management");
+	$page = new Page("Afterthought Website Accelerator");
 	$tmpl = new Template();
 	
 	$page->run();

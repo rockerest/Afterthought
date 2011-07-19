@@ -1,8 +1,8 @@
 <?php
 	require_once('Template.php');
 	require_once('User.php');
-	require_once('Session.php');
-	setSession(0,"/");
+	//require_once('Session.php');
+	//setSession(0,"/");
 	
 	class Header
 	{
@@ -28,7 +28,7 @@
 			}
 			elseif( ($_SERVER['SCRIPT_NAME'] == '/index.php' && isset($_SESSION['active'])) )
 			{
-				header('Location: projects.php');
+				header('Location: accepted.php');
 			}
 			elseif( ($_SERVER['SCRIPT_NAME'] == '/index.php' && !isset($_SESSION['active'])) )
 			{

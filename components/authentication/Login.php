@@ -19,7 +19,7 @@
 			setSessionVar('roleid', $tmp->authentication->role->roleid);
 			setSessionVar('userid', $tmp->userid);
 			
-			throw new RedirectBrowserException("/index.php?code=0");
+			throw new RedirectBrowserException("/accepted.php?code=0");
 		}
 		else
 		{
