@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+	
+	<?php
+		$cssLinks = array(
+							"global",
+							"local",
+							$tmpl->headerContent['css']['link'],
+							$tmpl->appContent['css']['link'],
+							$tmpl->footerContent['css']['link'],
+							"css3buttons",
+							"blackbird",
+							"jquery.ui"
+						);
+						
+		$css = implode(",", $cssLinks);
+	?>
+		
+	<link rel="stylesheet" href="/components/system/CSS.php?q=<?= $css; ?>" type="text/css" />
+	<title>
+		<?= $tmpl->title; ?>
+	</title>		
+</head>
+
+<body>
+	<div id="sticky-wrap">
+		<div id="header">
+			<?= $tmpl->headerContent['html'] ."\n"; ?>
+		</div>
+		<div id="leftPad">
+			<div id="page" class="clear">
+				<div id="content" class="center">
+					<?= $tmpl->appContent['html'] . "\n"; ?>
+				</div>
+			</div>
+		</div>
+		<div id="push"></div>
+	</div>
+	<div id="footer">
+		<?= $tmpl->footerContent['html'] ."\n"; ?>
+	</div>
+	<noscript>
+		<div id="nojs" style="display: block;">
+			It looks like you don't have Javascript enabled.  This site uses javascript for most functionality, and you will be missing out on a lot of cool features and many abilities without it!
+			<br />
+			It is recommended that you turn Javascript ON in your browser.
+		</div>
+	</noscript>
+
+	<!--    Load Javascript Library - jQuery     -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+	<!-- 	jQuery UI	-->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.11/jquery-ui.min.js"></script>
+	
+	<!--	Load sitewide scripts				 -->
+	<script type="text/javascript" src="/global/global.js"></script>
+	<script type="text/javascript" src="/global/blackbird/blackbird.js"></script>
+	<!-- <script type="text/javascript" src="/scripts/local.js"></script>
+	
+	<!--    Load custom jQuery Plugins           
+	<script type="text/javascript" src="/jquery/jquery.fadeDown.js"></script>
+	<script type="text/javascript" src="/jquery/jquery.idle.js"></script>
+
+			Load external jQuery plugins         
+	<script type="text/javascript" src="/jquery/jquery.event.hover.js"></script>
+	<script type="text/javascript" src="/jquery/jquery.easing.js"></script>-->
+
+	<script type="text/javascript">
+	$( document ).ready( function(){
+	  <?php
+			print $tmpl->headerContent['js'] . "\n";
+			print $tmpl->appContent['js'] . "\n";
+			print $tmpl->footerContent['js'] . "\n";
+		?>
+								  });
+	</script>
+</body>
+</html>

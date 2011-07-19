@@ -1,0 +1,1 @@
+This file symlinks to the "global" directory found in "myframework/"
