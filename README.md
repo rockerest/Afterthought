@@ -20,6 +20,9 @@ There are two files that you need that are not included in this repository for v
     `    order deny,allow`  
     `    deny from all`  
     `</Files>`  
+	
+This website template includes the following third-party items:  
+[Iconic Icon Set](http://somerandomdude.com/projects/iconic/) by P.J. Onori which is Licensed under the [CC-BY-SA-3.0](http://creativecommons.org/licenses/by-sa/3.0/us/).  
   
 I couldn't find a good license, because there are too many goddamn licenses, so I wrote this:  
 
