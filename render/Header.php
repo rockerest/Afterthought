@@ -1,8 +1,6 @@
 <?php
 	require_once('Template.php');
 	require_once('User.php');
-	//require_once('Session.php');
-	//setSession(0,"/");
 	
 	class Header
 	{
