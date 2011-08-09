@@ -11,7 +11,7 @@
 
 		private $page_title;
 
-        public function __construct($page_title )
+        public function __construct($page_title)
 		{
 			$this->page_title = $page_title;		
         }
@@ -36,4 +36,18 @@
             return $tmpl->build('page.html');
         }
     }
+	
+	function clean($string, $level = 2)
+	{
+		if( $level > 0 )
+		{
+			$string = strip_tags($string);
+			if( $level > 1 )
+			{
+				$string = htmlentities($string);
+			}
+		}
+		
+		return $string;
+	}
 ?>
