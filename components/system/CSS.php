@@ -1,7 +1,8 @@
 <?php
 	header('Content-Type: text/css');
 
-	preg_match_all('#[\w\.]+#', $_GET['q'], $files);
+	$q = isset($_GET['q']) ? $_GET['q'] : null;
+	preg_match_all('#[\w\.]+#', $q, $files);
 	$content = '';
 	
 	foreach ($files[0] as $fn)
