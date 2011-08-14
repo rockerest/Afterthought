@@ -1,0 +1,4 @@
+Options -Indexes -Multiviews
+
+ErrorDocument 404 /errors.php?code=404
+ErrorDocument 500 /errors.php?code=500

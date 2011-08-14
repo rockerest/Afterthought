@@ -20,17 +20,23 @@
 			$html = $tmpl->build('header.html');
 			$js = $tmpl->build('header.js');
 			
-			if( ($_SERVER['SCRIPT_NAME'] != '/index.php' && !isset($_SESSION['active'])) )
+			$active = isset($_SESSION['active']);
+			$script = $_SERVER['SCRIPT_NAME'];
+			
+			if( $script != '/errors.php' )
 			{
-				header('Location: index.php?code=2');
-			}
-			elseif( ($_SERVER['SCRIPT_NAME'] == '/index.php' && isset($_SESSION['active'])) )
-			{
-				header('Location: accepted.php');
-			}
-			elseif( ($_SERVER['SCRIPT_NAME'] == '/index.php' && !isset($_SESSION['active'])) )
-			{
-				//allow to go to login page
+				if( $script != '/index.php' && !$active )
+				{
+					header('Location: index.php?code=2');
+				}
+				elseif( $script == '/index.php' && $active )
+				{
+					header('Location: accepted.php');
+				}
+				elseif( $script == '/index.php' && !$active )
+				{
+					//allow to go to login or error handler page
+				}
 			}
 			
 			$content = array(
