@@ -32,7 +32,7 @@
 		case 3:
 				//fringe case: user types in a page they are not authorized to see
 				$tmpl->type = "error";
-				$tmpl->message = "Your account does have have the proper credentials to view that page.";
+				$tmpl->message = "Your account doesn't have the proper credentials to view that page.";
 		case -1:
 		default:
 				break;
