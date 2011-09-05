@@ -75,7 +75,7 @@ form input[type="submit"]{
 	margin: auto auto auto auto;
 	min-height: 30.5em;
 	
-	padding: 3em 0;
+	padding: 3em 0 0;
 	
 	border: .0625em solid #C5CAE8;
 	border-bottom: none;
@@ -101,5 +101,5 @@ form input[type="submit"]{
 
 #footer, #push {
 	height: 3.125em;
-	padding-top: 1em;
+	padding-top: .7em;
 }
