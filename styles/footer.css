@@ -8,7 +8,5 @@
 	padding: .3125em;
 	
 	background: #F1F1F1;
-	background: -moz-linear-gradient(top, #E5ECF9 0%, #FFFFFF 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E5ECF9), color-stop(100%,#FFFFFF));	
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E5ECF9', endColorstr='#FFFFFF',GradientType=0 );
+	background: linear-gradient(-90deg, #E5ECF9 0%, #FFFFFF 100%);
 }

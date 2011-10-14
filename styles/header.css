@@ -8,11 +8,9 @@
 	
 	border-bottom: .0625em solid #C5CAE8;
 	padding: .625em;
-	
+
 	background: #F1F1F1;
-	background: -moz-linear-gradient(top, #FFFFFF 0%, #E5ECF9 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFFFFF), color-stop(100%,#E5ECF9));	
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFFF', endColorstr='#E5ECF9',GradientType=0 );
+	background: linear-gradient(-90deg, #FFFFFF 0%, #E5ECF9 100%);
 }
 
 #header #logo{
