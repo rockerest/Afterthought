@@ -11,7 +11,8 @@
 		$folders = array(
 							"../../global/",
 							"../../global/blackbird/",
-							"../../jquery/"
+							"../../jquery/",
+							"../../scripts/"
 						);
 		foreach ( $folders as $folder )
 		{
