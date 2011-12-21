@@ -44,4 +44,3 @@
 	print $page->build($appContent);
 
 ?>
-?>
