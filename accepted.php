@@ -33,7 +33,9 @@
 						'css'	=>	array(	'code' => $css,
 											'link' => 'accepted'
 											),
-						'js' => $js
+						'js' => array(	'code' => $js,
+										'link' => 'accepted'
+										)
 						);
 
 	print $page->build($appContent);

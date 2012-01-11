@@ -38,7 +38,9 @@
 						'css'	=>	array(	'code' => $css,
 											'link' => 'error'
 											),
-						'js' => $js
+						'js' => array(	'code' => $js,
+										'link' => 'error'
+										)
 						);
 
 	print $page->build($appContent);

@@ -7,7 +7,7 @@
 	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
 	
-	<?php
+	<?php		
 		$cssLinks = array(
 							"global",
 							"local",
@@ -54,33 +54,25 @@
 	</noscript>
 
 	<!-- External Scripts -->
-	<? include_once('../jquery/jquery.html'); ?>
-
 	<?
+		require_once('../jquery/Jquery.php');
+		$jquery = new Jquery();
+		print $jquery->all;
+		
+		//imported scripts
 		$jsLinks = array(
 							"global",
-							//"local",
+							"local",
 							"cssfx.min",
-							"blackbird"//,
-							//"jquery.fadeDown",
-							//"jquery.idle",
-							//"jquery.event.hover",
-							//"jquery.easing"
+							"blackbird",
+							$tmpl->headerContent['js']['link'],
+							$tmpl->appContent['js']['link'],
+							$tmpl->footerContent['js']['link']
 						);
 						
 		$js = implode(",", $jsLinks);
 	?>
 	
-	<script type="text/javascript" src="components/system/JS.php?q=<?= $js; ?>"></script>
-
-	<script type="text/javascript">
-	$( document ).ready( function(){
-	  <?php
-			print $tmpl->headerContent['js'] . "\n";
-			print $tmpl->appContent['js'] . "\n";
-			print $tmpl->footerContent['js'] . "\n";
-		?>
-								  });
-	</script>
+	<script type="text/javascript" src="components/system/JS.php?q=<?= $js; ?>"></script
 </body>
 </html>

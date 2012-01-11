@@ -47,7 +47,9 @@
 						'css'	=>	array(	'code' => $css,
 											'link' => 'index'
 											),
-						'js' => $js
+						'js' => array(	'code' => $js,
+										'link' => 'index'
+										)
 						);
 
 	print $page->build($appContent);
