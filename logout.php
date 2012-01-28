@@ -3,7 +3,14 @@
 	
 	require_once('Page.php');
 	
+	$fwd = isset($_GET['fwd']) ? urldecode($_GET['fwd']) : null;
+	
+	if( !$fwd )
+	{
+		$fwd = 'index.php?code=4';
+	}
+	
 	session_destroy();
 	setSession(0,"/");
-	header('Location: index.php');
+	header('Location: ' . $fwd);
 ?>
