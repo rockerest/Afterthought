@@ -1,0 +1,99 @@
+<?
+	if( $tmpl->code > -1 )
+	{
+		?>
+		<div class="gutter message-box center w75 <?= $tmpl->type; ?>">
+			<?= $tmpl->message; ?>
+		</div>
+		<?
+	}
+?>
+
+<h2 class="bump follow message-box center w50"><img src="images/icons/users-24.png" alt="all employees" class="icon-fix" />All Users</h2>
+<?
+	if( $tmpl->users )
+	{
+	?>
+	<table class="w60 center">
+		<thead>
+			<tr>
+				<th>User Name</th>
+				<th>Contact</th>
+				<th>Role</th>
+				<th>Tools</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="5">
+					<a href="account.php?a=addnew&amp;tb=e" class="float-r"><img src="images/icons/user--plus.png" alt="add user" class="icon-fix" />Add User</a>
+				</td>
+			</tr>
+		</tfoot>
+		<tbody>
+		<?
+			foreach($tmpl->users as $user)
+			{
+				$elevate = ($user->authentication->roleid == 3) ? true : false;
+				$reduce = ($user->authentication->roleid == 2) ? true : false;
+				
+				if( $_SESSION['roleid'] == 1 )
+				{
+					$elevate = true;
+					$reduce = true;
+				}
+				?>
+				<tr>
+					<td><a href="account.php?uid=<?=$user->userid;?>"><?=$user->fullName;?></a></td>
+					<td>
+						<a href="mailto:<?=$user->contact->email;?>"><img src="images/icons/mail.png" alt="envelope" class="icon-fix tipped" title="Open new email to <?=$user->fullname;?>"/></a>
+					</td>
+					<td>
+						<?if($reduce){?><a href="components/account/reduce.php?uid=<?=$user->userid;?>&amp;tb=e"><img src="images/icons/arrow-270.png" alt="reduce" class="icon-fix tipped" title="Reduce <?=$user->fullname;?>'s Role"/></a><?}?>
+						<?=$user->authentication->role->name;?>
+						<?if($elevate){?><a href="components/account/elevate.php?uid=<?=$user->userid;?>&amp;tb=e"><img src="images/icons/arrow-090.png" alt="elevate" class="icon-fix tipped" title="Elevate <?=$user->fullname;?>'s Role"/></a><?}?>						
+					</td>
+					<td>
+						<a href="account.php?uid=<?=$user->userid;?>"><img src="images/icons/pencil.png" alt="edit" title="Edit User" class="tipped" /></a>
+						<a href="components/account/toggleAccount.php?uid=<?=$user->userid;?>&amp;tb=e">
+						<?
+						if( !$user->authentication->disabled )
+						{
+							print '<img src="images/icons/door-open.png" alt="disable" title="Disable Login" class="tipped" /></a>';
+						}
+						else
+						{
+							print '<img src="images/icons/door.png" alt="enable" title="Enable Login" class="tipped" /></a>';
+						}
+						?>
+						<a href="components/account/toggleResetPassword.php?uid=<?=$user->userid;?>&amp;tb=e">
+						<?
+						if( !$user->authentication->resetPassword )
+						{
+							print '<img src="images/icons/tick-button.png" alt="reset" title="Force Password Change" class="tipped" /></a>';
+						}
+						else
+						{
+							print '<img src="images/icons/exclamation-button.png" alt="reset" title="Accept Current Password" class="tipped" /></a>';
+						}
+						?>
+					</td>
+					<td>
+						<a href="components/account/delete.php?uid=<?=$user->userid;?>&amp;tb=e"><img src="images/icons/minus.png" alt="delete" title="Delete User (permanent)" class="tipped" /></a>
+					</td>
+				</tr>
+				<?
+			}
+			?>
+		</tbody>
+	</table>
+	<?
+	}
+	else
+	{
+	?>
+	<p>No employees found</p>
+	<?
+	}
+?>
