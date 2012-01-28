@@ -17,13 +17,13 @@
 			$tmpl = new Template();
 			
 			$tmpl->active = $active = isset($_SESSION['active']);
-			$tmpl->resetPassword = $rp = 1;
+			$rp = 1;
 			
 			if( $active )
 			{
-				$user = User::getByID($_SESSION['userid']);
+				$tmpl->user = User::getByID($_SESSION['userid']);
 				
-				switch( strtolower($user->gender) )
+				switch( strtolower($tmpl->user->gender) )
 				{
 					case 'm':
 						$tmpl->icon = 'user';
@@ -36,10 +36,7 @@
 						break;
 				}
 				
-				$tmpl->account = $_SESSION['userid'];
-				$tmpl->roleid = $_SESSION['roleid'];
-				$tmpl->name = $user->fullname;
-				$tmpl->resetPassword = $rp = $user->authentication->resetPassword;
+				$rp = $user->authentication->resetPassword;
 			}
 			
 			$css = $tmpl->build('header.css');
