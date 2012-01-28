@@ -1,0 +1,101 @@
+<?php
+	require_once('connect.php');
+	require_once('User.php');
+	
+	class Quick_Login extends Base
+	{
+		public static function getByHash($hash)
+		{
+			global $db;
+			$sql = "SELECT * FROM quick_login WHERE hash=? AND used=0 AND expires>?";
+			$values = array($hash, time());
+			$ql = $db->qwv($sql, $values);
+			
+			return Quick_Login::wrap($ql);
+		}
+		
+		public static function add($hash, $userid, $expires, $used)
+		{
+			$ql = new Quick_Login(null, $hash, $userid, $expires, $used);
+			$res = $ql->save();
+			
+			if( $res )
+			{
+				return $res;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		public static function wrap($qls)
+		{
+			$qlList = array();
+			foreach( $qls as $ql )
+			{
+				array_push($qlList, new Quick_Login($ql['quick_loginid'], $ql['hash'], $ql['userid'], $ql['expires'], $ql['used']));
+			}
+			
+			return Quick_Login::sendback($qlList);
+		}
+		
+		private $quick_loginid;
+		private $hash;
+		private $userid;
+		private $expires;
+		private $used;
+		
+		public function __construct($quick_loginid, $hash, $userid, $expires, $used)
+		{
+			$this->quick_loginid = $quick_loginid;
+			$this->hash = $hash;
+			$this->userid = $userid;
+			$this->expires = $expires;
+			$this->used = $used;
+		}
+		
+		public function __get($var)
+		{
+			if( strtolower($var) == 'user' )
+			{
+				return User::getByID($this->userid);
+			}
+			return $this->$var;
+		}
+				
+		public function __set($n, $v)
+		{
+			$this->$n = $v;
+		}
+		
+		public function save()
+		{
+			global $db;
+			if( !isset($this->quick_loginid) )
+			{
+				$sql = "INSERT INTO quick_login (hash, userid, expires, used) VALUES(?,?,?,?)";
+				$values = array($this->hash, $this->userid, $this->expires, $this->used);
+				$db->qwv($sql, $values);
+				
+				if( $db->stat() )
+				{
+					$this->quick_loginid = $db->last();
+					return $this;
+				}
+				else
+				{
+					return false;
+				}
+			}
+			else
+			{
+				$sql = "UPDATE quick_login SET hash=?, userid=?, expires=?, used=? WHERE quick_loginid=?";
+				$values = array ($this->hash, $this->userid, $this->expires, $this->used, $this->quick_loginid);
+				$db->qwv($sql, $values);
+
+				return $db->stat();
+			}
+		}
+	}
+?>
