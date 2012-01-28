@@ -37,17 +37,18 @@
         }
     }
 	
-	function clean($string, $level = 2)
+	function secure($role = 3)
 	{
-		if( $level > 0 )
+		if( !$_SESSION['active'] )
 		{
-			$string = strip_tags($string);
-			if( $level > 1 )
+			header('Location: index.php?code=2');
+		}
+		else
+		{
+			if( $_SESSION['roleid'] > $role )
 			{
-				$string = htmlentities($string);
+				header('Location: logout.php?fwd=' . urlencode('index.php?code=3'));
 			}
 		}
-		
-		return $string;
 	}
 ?>
