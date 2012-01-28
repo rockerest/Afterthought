@@ -12,6 +12,8 @@
 							"../../global/",
 							"../../global/css3buttons/",
 							"../../global/blackbird/",
+							"../../global/tipped/",
+							"../../global/fullcalendar/",
 							"../../styles/",
 							"../../jquery/"
 						);

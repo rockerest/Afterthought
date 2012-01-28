@@ -11,6 +11,8 @@
 		$folders = array(
 							"../../global/",
 							"../../global/blackbird/",
+							"../../global/tipped/",
+							"../../global/fullcalendar/",
 							"../../jquery/",
 							"../../scripts/"
 						);
