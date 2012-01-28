@@ -1,0 +1,163 @@
+<?
+	if( $tmpl->code > -1 )
+	{
+	?>
+<div class="gutter message-box center w75 <?= $tmpl->type; ?>">
+	<?= $tmpl->message; ?>
+</div>
+	<?
+	}
+	
+	if( $tmpl->action == 'manage' )
+	{
+		$self = $tmpl->user->userid == $_SESSION['userid'];
+	?>
+<h2 class="bump follow message-box center w50"><img src="images/icons/user--pencil-24.png" alt="manage" class="icon-fix" /><?=$tmpl->user->fullName;?></h2>
+<form id="account" class="clear" method="POST" action="components/account/manage.php?uid=<?=$tmpl->user->userid;?>">
+	<fieldset class="push" >
+		<legend>Personal Information</legend>
+		<label for="fname">First Name</label>
+		<br />
+		<input type="text" id="fname" name="fname" placeholder="First Name" value="<?=$tmpl->data['fname'];?>" />
+		<br />
+		<label for="lname">Last Name</label>
+		<br />
+		<input type="text" id="lname" name="lname" placeholder="Last Name" value="<?=$tmpl->data['lname'];?>" />
+		<br />
+		Gender
+		<br />
+		<input type="radio" name="gender" <?if(strtolower($tmpl->data['gender'])=='m'){print 'checked="checked" ';}?>value="m" class="hide" data-link="gender" />
+		<input type="radio" name="gender" <?if(strtolower($tmpl->data['gender'])=='f'){print 'checked="checked" ';}?>value="f" class="hide" data-link="gender" />
+		<button type="button" class="pill <?if(strtolower($tmpl->data['gender'])=='m'){print 'active ';}?>button button_switch" data-link="gender" data-match="m" >Male</button>
+		<button type="button" class="pill <?if(strtolower($tmpl->data['gender'])=='f'){print 'active ';}?>button button_switch" data-link="gender" data-match="f" >Female</button>
+	</fieldset>
+	<fieldset class="push" >
+		<legend>Contact Information</legend>
+		<label for="email">Email Address</label>
+		<br />
+		<input type="email" id="email" name="email" placeholder="Email Address" value="<?=$tmpl->data['email'];?>" />
+		<br />
+		<label for="phone">Phone Number</label>
+		<br />
+		<input type="tel" id="phone" name="phone" placeholder="+1-123-456-7890" value="<?=$tmpl->data['phone'];?>" pattern="^(\+)?(1?(-?\d{3})-?)?(\d{3})(-?\d{4})$"/>
+	</fieldset>
+</form>
+<div class="message-box info center clear" id="toolbar">
+	<a href="account.php?a=login<?if(!$self){print "&amp;uid=".$tmpl->user->userid;}?>" id="login" ><img src="images/icons/key.png" alt="login credentials" class="icon-fix" />Edit Login Info</a>
+	<button type="button" id="submit"><img src="images/icons/disk.png" alt="save" class="icon-fix" />Save Changes</button>
+	<?if($_SESSION['roleid']<3){?><button type="button" id="delete" data-id="<?=$tmpl->user->userid;?>" class="negative button push"><img src="images/icons/minus.png" alt="delete" class="icon-fix" />Delete User</button><?}?>
+</div>
+	<?
+	}
+	elseif( $tmpl->action == 'addnew' )
+	{
+	?>
+<h2 class="bump follow message-box center w50"><img src="images/icons/user--plus-24.png" alt="add empl" class="icon-fix" /> New Employee</h2>
+<?
+	$qs = ($gid || $tmpl->tb) ? "?" : null;
+	
+	$params = array('gid' => $gid, 'tb' => $tmpl->tb);
+	
+	if( $qs )
+	{
+		foreach( $params as $n => $v )
+		{
+			if( $v )
+			{
+				$qs .= "$n=$v&amp;";
+			}
+		}
+		$qs = (substr($qs, -5) == '&amp;') ? substr($qs, 0, -5) : $qs;
+	}
+?>
+<form id="account" class="clear" method="POST" action="components/account/add.php<?=$qs?>">
+	<fieldset class="push" >
+		<legend>Required Information</legend>
+		<label for="fname">First Name</label>
+		<br />
+		<input type="text" id="fname" name="fname" placeholder="First Name" value="<?=$tmpl->data['fname'];?>" />
+		<br />
+		<label for="lname">Last Name</label>
+		<br />
+		<input type="text" id="lname" name="lname" placeholder="Last Name" value="<?=$tmpl->data['lname'];?>" />
+		<br />
+		<label for="email">Email Address</label>
+		<br />
+		<input type="email" id="email" name="email" placeholder="Email Address" value="<?=$tmpl->data['email'];?>" />
+		<br />
+		<label for="pass">Password</label>
+		<br />
+		<input type="password" id="pass" name="pass" placeholder="Password" />
+		<?
+			if( $_SESSION['roleid'] == 1 )
+			{
+		?>
+		<br />
+		<label for="rid">ADMIN: Role Assignment</label>
+		<br />
+		<select name="rid" id="rid">
+		<?
+			if( $tmpl->roles )
+			{
+				foreach( $tmpl->roles as $role )
+				{
+				?>
+					<option value="<?=$role->roleid;?>" title="<?=$role->description;?>"><?=$role->name;?></option><?='\n';?>
+				<?
+				}
+			}
+		?>
+		</select>
+		<?
+			}
+		?>
+	</fieldset>
+	<fieldset class="push hide" data-control="toggle">
+		<legend>Other Information</legend>
+		Gender
+		<br />
+		<input type="radio" name="gender" <?if(strtolower($tmpl->data['gender'])=='m'){print 'checked="checked" ';}?>value="m" class="hide" data-link="gender" />
+		<input type="radio" name="gender" <?if(strtolower($tmpl->data['gender'])=='f'){print 'checked="checked" ';}?>value="f" class="hide" data-link="gender" />
+		<button type="button" class="pill <?if(strtolower($tmpl->data['gender'])=='m'){print 'active ';}?>button button_switch" data-link="gender" data-match="m" >Male</button>
+		<button type="button" class="pill <?if(strtolower($tmpl->data['gender'])=='f'){print 'active ';}?>button button_switch" data-link="gender" data-match="f" >Female</button>
+		<br />
+		<label for="phone">Phone Number</label>
+		<br />
+		<input type="tel" id="phone" name="phone" placeholder="+1-123-456-7890" pattern="^(\+)?(1?(-?\d{3})-?)?(\d{3})(-?\d{4})$"/>
+	</fieldset>
+</form>
+<div class="message-box info center clear" id="toolbar">
+	<button type="button" id="toggle" data-toggle="0"><img src="images/icons/arrow.png" alt="toggle" class="icon-fix" /><span>Show optional fields</span></button>
+	<button type="button" id="submit"><img src="images/icons/plus.png" alt="add" class="icon-fix" />Add Employee</button>
+</div>
+	<?
+	}
+	elseif( $tmpl->action == 'login' )
+	{
+	?>
+<h2 class="bump follow message-box center w50"><img src="images/icons/key--pencil-24.png" alt="edit login" class="icon-fix" /> Edit Login</h2>
+<form id="account" class="clear center login" method="POST" action="components/account/manage.php?uid=<?=$tmpl->user->userid;?>">
+	<fieldset class="center" >
+		<legend>Login Information</legend>
+		<label for="lemail">Email Address</label>
+		<br />
+		<input type="email" id="lemail" name="lemail" placeholder="Email Address" value="<?=$tmpl->data['email'];?>" />
+		<br />
+		<input type="checkbox" id="contact" name="contact" /><label for="contact">Make this the contact address</label>
+		<br />
+		<label for="pass">New Password</label>
+		<br />
+		<input type="password" id="pass" name="pass" placeholder="New Password" />
+		<br />
+		<label for="passver">Verify New Password</label>
+		<br />
+		<input type="password" id="passver" name="passver" placeholder="New Password Again" />
+	</fieldset>
+</form>
+<div class="message-box info center clear" id="toolbar">
+	<a href="account.php<?if(!$self){print "?amp;uid=".$tmpl->user->userid;}?>" id="account" ><img src="images/icons/<?=$tmpl->icon;?>.png" alt="account" class="icon-fix" />Account Information</a>
+	<button type="button" id="submit"><img src="images/icons/disk.png" alt="login" class="icon-fix" />Save Changes</button>
+</div>
+	<?
+	}
+?>
