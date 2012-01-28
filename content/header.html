@@ -1,21 +1,48 @@
-<div id="logo" class="pointer">
-	<div id="image"></div>
+<div id="header-content" class="clear">
+	<div id="title" class="pointer">
+		<img src="images/logo.png" alt="Afterthought" />
+	</div>
+	<div id="menu" class="left-text hide">
+		<?
+			if( $tmpl->active )
+			{
+			?>
+			<?
+				if( $_SESSION['roleid'] < 3 )
+				{
+				?>
+		<a href="users.php"><img src="images/icons/users.png" alt="users" class="icon-fix" />Users</a>
+				<?
+				}
+				
+				if( $_SESSION['roleid'] < 2 )
+				{
+				?>
+				<?
+				}
+			}
+		?>
+	</div>
+	<div id="user" class="left-text hide">
+		<a href="logout.php" id="head_logout"><img src="images/icons/door--arrow.png" alt="door" class="icon-fix" />Logout</a>
+	</div>
+	<div id="control">
+		<?
+			if( $tmpl->active )
+			{
+				//the logged in toolbar
+				?>
+				<a href="home.php" id="head_dashboard" data-tippedID="menu" class="fixedElementTipped-below"><img src="images/icons/home.png" alt="dashboard" class="icon-fix" />Home</a>
+				&nbsp;
+				<a href="account.php" data-tippedID="user" class="fixedElementTipped-below"><img src="images/icons/<?=$tmpl->icon;?>.png" alt="user" class="icon-fix" /><?=$tmpl->name;?></a>
+				&nbsp;
+				
+				<?
+			}
+			else
+			{
+				//the not logged in toolbar
+			}
+		?>
+	</div>
 </div>
-<div id="title" class="pointer">
-	Afterthought Website Accelerator
-</div>
-<?php
-	if( $_SESSION['active'] )
-	{
-?>
-<div id="menu">
-	<ul class="clear">
-		<li><a href="index.php"><img src="/images/icons/home_32x32.png" alt="home image" />Home</a></li>
-		<li><a href="index.php"><img src="/images/icons/book_32x32.png" alt="book image" />Books</a></li>
-		<li><a href="index.php"><img src="/images/icons/user_24x32.png" alt="user image" />People</a></li>
-		<li><a href="logout.php"><img src="/images/icons/key_stroke_32x32.png" alt="key image" />Logout</a></li>
-	</ul>
-</div>
-<?
-	}
-?>

@@ -1,76 +1,81 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<base href="/" />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+	<base href="/" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-		<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
-		<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css">
+	
+	<?php
+		$cssLinks = array(
+							"global",
+							"local",
+							"css3buttons",
+							"tipped",
+							"jquery.ui",
+							$tmpl->headerContent['css']['link'],
+							$tmpl->appContent['css']['link'],
+							$tmpl->footerContent['css']['link']
+						);
+						
+		$css = implode(",", $cssLinks);
+	?>
+		
+	<link rel="stylesheet" href="components/system/CSS.php?q=<?= $css; ?>" type="text/css"/>
+	<title>
+		<?= $tmpl->title; ?>
+	</title>		
+</head>
 
-		<?php
-			$cssLinks = array(
-				"global",
-				"local",
-				$tmpl->headerContent['css']['link'],
-				$tmpl->appContent['css']['link'],
-				$tmpl->footerContent['css']['link'],
-				"css3buttons",
-				"blackbird",
-				"jquery.ui"
-			);
-			$css = implode(",", $cssLinks);
-		?>
-
-		<link rel="stylesheet" href="components/system/CSS.php?q=<?= $css; ?>" type="text/css" class="cssfx" />
-		<title>
-			<?= $tmpl->title; ?>
-		</title>
-	</head>
-
-	<body>
-		<div id="sticky-wrap">
-			<div id="header">
-				<?= $tmpl->headerContent['html'] ."\n"; ?>
-			</div>
-			<div id="leftPad">
-				<div id="page" class="clear">
-					<div id="content" class="center">
-						<?= $tmpl->appContent['html'] . "\n"; ?>
-					</div>
-				</div>
-			</div>
-			<div id="push"></div>
+<body>
+	<div id="sticky-wrap">
+		<div id="header">
+			<?= $tmpl->headerContent['html'] ."\n"; ?>
 		</div>
-		<div id="footer">
-			<?= $tmpl->footerContent['html'] ."\n"; ?>
-		</div>
-		<noscript>
-			<div id="nojs" style="display: block;">
-				It looks like you don't have Javascript enabled. This site uses javascript for most functionality, and you will be missing out on a lot of cool features and many abilities without it!
-				<br />
-				It is recommended that you turn Javascript ON in your browser.
+		
+		<div id="page" class="clear">
+			<div id="content" class="center">
+				<?= $tmpl->appContent['html'] . "\n"; ?>
 			</div>
-		</noscript>
+		</div>
+		
+		<div id="push"></div>
+	</div>
+	<div id="footer">
+		<?= $tmpl->footerContent['html'] ."\n"; ?>
+	</div>
+	<noscript>
+		<div id="nojs" style="display: block;">
+			It looks like you don't have Javascript enabled.  This site uses javascript for most functionality, and you will be missing out on a lot of cool features and many abilities without it!
+			<br />
+			It is recommended that you turn Javascript ON in your browser.
+		</div>
+	</noscript>
 
-		<!-- External Scripts -->
-		<?
-			require_once('../jquery/jQuery.php');
-			$jquery = new jQuery();
-			print $jquery->all;
-			
-			//imported scripts
-			$jsLinks = array(
-				"global",
-				"local",
-				"cssfx.min",
-				"blackbird",
-				$tmpl->headerContent['js']['link'],
-				$tmpl->appContent['js']['link'],
-				$tmpl->footerContent['js']['link']
-			);
-			$js = implode(",", $jsLinks);
-		?>
-
-		<script type="text/javascript" src="components/system/JS.php?q=<?= $js; ?>"></script>
-	</body>
+	<!-- External Scripts -->
+	<?
+		include_once('../jquery/jQuery.php'); 
+		$jq = new jQuery();
+		print $jq->all;
+		
+		$jsLinks = array(
+							"global",
+							"jquery.ui.custom.min",
+							"excanvas",
+							"spinners",
+							"tipped",
+							"local",
+							$tmpl->headerContent['js']['link'],
+							$tmpl->appContent['js']['link'],
+							$tmpl->footerContent['js']['link']
+						);
+						
+		$js = implode(",", $jsLinks);
+	?>
+	
+	<script type="text/javascript" src="components/system/JS.php?q=<?= $js; ?>"></script>
+</body>
 </html>
