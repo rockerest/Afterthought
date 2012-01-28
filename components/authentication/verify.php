@@ -24,15 +24,15 @@
 			$ql->used = 1;
 			$ql->save();
 			
-			throw new RedirectBrowserException("home.php?code=0");
+			throw new RedirectBrowserException("/home.php?code=0");
 		}
 		else
 		{
-			throw new RedirectBrowserException('index.php?code=9');
+			throw new RedirectBrowserException('/index.php?code=9');
 		}
 	}
 	else
 	{
-		throw new RedirectBrowserException('index.php?code=9');
+		throw new RedirectBrowserException('/index.php?code=9');
 	}
 ?>

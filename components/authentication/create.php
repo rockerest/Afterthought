@@ -64,21 +64,21 @@ HEREDOCend;
 				if( mail($to, $subject, $body, $headers) )
 				{
 					//redirect to login			
-					throw new RedirectBrowserException("index.php?code=6");
+					throw new RedirectBrowserException("/index.php?code=6");
 				}
 			}
 			else
 			{
-				throw new RedirectBrowserException("index.php?a=request&code=8&" . http_build_query($data));
+				throw new RedirectBrowserException("/index.php?a=request&code=8&" . http_build_query($data));
 			}
 		}
 		else
 		{
-			throw new RedirectBrowserException("index.php?a=request&code=7&" . http_build_query($data));
+			throw new RedirectBrowserException("/index.php?a=request&code=7&" . http_build_query($data));
 		}
 	}
 	else
 	{
-		throw new RedirectBrowserException("index.php?a=request&code=5&" . http_build_query($data));
+		throw new RedirectBrowserException("/index.php?a=request&code=5&" . http_build_query($data));
 	}
 ?>

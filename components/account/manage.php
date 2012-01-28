@@ -8,7 +8,7 @@
 	
 	if( !$_SESSION['active'] )
 	{
-		header('Location: ../../index.php?code=2');
+		header('Location: /index.php?code=2');
 	}
 	
 	$userid = isset($_GET['uid']) ? $_GET['uid'] : $_SESSION['userid'];
@@ -17,7 +17,7 @@
 	
 	if( $userid != $_SESSION['userid'] && $_SESSION['roleid'] == 3 )
 	{
-		header('Location: ../../index.php?code=2');
+		header('Location: /index.php?code=2');
 	}
 	
 	if( $userid != $_SESSION['userid'] )
@@ -80,17 +80,17 @@
 	}
 	elseif( $pass )
 	{
-		header('Location: ../../account.php?a=login&code=4' . $addon);
+		header('Location: /account.php?a=login&code=4' . $addon);
 		exit();
 	}
 	
 	if( $attempt->save() && $cont->save() && $auth->save() )
 	{
-		header('Location: ../../account.php?code=0' . $addon);
+		header('Location: /account.php?code=0' . $addon);
 	}
 	else
 	{
 		//an error occurred during saving.  Probably bad input that wasn't caught above
-		header('Location: ../../account.php?code=1' . $addon . "&" . http_build_query($data));
+		header('Location: /account.php?code=1' . $addon . "&" . http_build_query($data));
 	}
 ?>

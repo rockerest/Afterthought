@@ -58,7 +58,7 @@ HEREDOCend;
 				if( mail($to, $subject, $body, $headers) )
 				{
 					//redirect to login			
-					throw new RedirectBrowserException("index.php?code=6");
+					throw new RedirectBrowserException("/index.php?code=6");
 				}
 			}
 		}

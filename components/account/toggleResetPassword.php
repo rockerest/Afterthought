@@ -7,7 +7,7 @@
 	
 	if( !$_SESSION['active'] )
 	{
-		header('Location: ../../index.php?code=2');
+		header('Location: /index.php?code=2');
 	}
 	
 	$self = User::getByID($_SESSION['userid']);
@@ -40,28 +40,28 @@
 		{
 			if( enable($user->userid) )
 			{
-				header('Location: ../../' . $return . '.php?code=10');
+				header('Location: /' . $return . '.php?code=10');
 			}
 			else
 			{
-				header('Location: ../../' . $return . '.php?code=12');
+				header('Location: /' . $return . '.php?code=12');
 			}
 		}
 		else
 		{
 			if( disable($user->userid) )
 			{
-				header('Location: ../../' . $return . '.php?code=9');
+				header('Location: /' . $return . '.php?code=9');
 			}
 			else
 			{
-				header('Location: ../../' . $return . '.php?code=11');
+				header('Location: /' . $return . '.php?code=11');
 			}
 		}
 	}
 	else
 	{
-		header('Location: ../../index.php?code=2');
+		header('Location: /index.php?code=2');
 	}
 	
 	function disable($id)

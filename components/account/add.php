@@ -7,11 +7,11 @@
 	
 	if( !$_SESSION['active'] )
 	{
-		header('Location: ../../index.php?code=2');
+		header('Location: /index.php?code=2');
 	}
 	elseif( $_SESSION['roleid'] > 2 )
 	{
-		header('Location: ../../index.php?code=2');
+		header('Location: /index.php?code=2');
 	}
 	
 	$data['pass'] = isset($_POST['pass']) ? $_POST['pass'] : null;
@@ -39,18 +39,18 @@
 	if( !$data['fname'] || !$data['lname'] || !$data['email'] || !$data['pass'] )
 	{
 		array_shift($data);
-		header('Location: ../../account.php?a=addnew&code=2&' . http_build_query($data));
+		header('Location: /account.php?a=addnew&code=2&' . http_build_query($data));
 	}
 	else
 	{
 		$new = User::add($data['fname'], $data['lname'], $data['email'], $data['pass'], $roleid);
 		if( $new )
 		{
-			header('Location: ../../' . $return . '.php?code=1');
+			header('Location: /' . $return . '.php?code=1');
 		}
 		else
 		{
-			header('Location: ../../account.php?a=addnew&code=3&' . http_build_query($data));
+			header('Location: /account.php?a=addnew&code=3&' . http_build_query($data));
 		}
 	}
 ?>

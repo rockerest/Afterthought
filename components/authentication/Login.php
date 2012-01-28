@@ -19,15 +19,15 @@
 			setSessionVar('roleid', $tmp->authentication->role->roleid);
 			setSessionVar('userid', $tmp->userid);
 			
-			throw new RedirectBrowserException("home.php?code=0");
+			throw new RedirectBrowserException("/home.php?code=0");
 		}
 		else
 		{
-			throw new RedirectBrowserException("index.php?code=1&email=" . $identity);
+			throw new RedirectBrowserException("/index.php?code=1&email=" . $identity);
 		}
 	}
 	else
 	{
-		throw new RedirectBrowserException("index.php?code=0&email=" . $identity);
+		throw new RedirectBrowserException("/index.php?code=0&email=" . $identity);
 	}
 ?>
