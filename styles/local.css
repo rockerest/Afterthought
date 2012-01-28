@@ -7,10 +7,27 @@ body{
 
 a{
 	color: #555555;
+	text-decoration: underline;
+}
+
+a:hover{
+	color: #5555CC;
 }
 
 #header a{
 	text-decoration: none;
+}
+
+strong{
+	font-weight: bold;
+}
+
+em{
+	font-style: italic;
+}
+
+h2{
+	background-color: #E9EBF6;
 }
 
 form{
@@ -18,14 +35,45 @@ form{
     line-height: 1.5em;
     margin: auto;
     text-align: left;
-    width: 17em;
+    width: 18em;
+}
+
+fieldset{
+	border: .0625em solid #C5CAE8;
+	padding: 1em;
+	
+	float: left;
+	
+	width: 16.9em;
+	min-height: 11em;
+}
+
+legend{
+	padding: .1em .25em;
+	background-color: #C5CAE8;
+}
+
+fieldset, legend{
+	-webkit-border-radius: .2em;
+	-moz-border-radius: .2em;
+	border-radius: .2em; 
 }
 
 form input:not([type="submit"]),
-form select{
+form select,
+form textarea{
 	font-size: 1em;
 	width: 16em;
 	margin-left: .5em;
+}
+
+form select{
+	width: 16.4em;
+}
+
+form textarea{
+	font-family: Helvetica, Arial, Tahoma, Geneva, sans-serif;
+	height: 6em;
 }
 
 form input[type="submit"]{
@@ -33,13 +81,57 @@ form input[type="submit"]{
 	font-size: 1em;
 }
 
+table{
+	width: 100%;
+}
+
+thead th, tbody td, tfoot td{
+	padding: .5em;
+}
+
+tfoot{
+	text-align: right;
+}
+
+thead tr, tfoot tr{
+	background-color: #E9EBF6;
+}
+
+tbody tr:hover{
+	background-color: #C5CAE8;
+}
+
 .gutter{
 	margin-top: -2.95em;
 	margin-bottom: .5em;
 }
 
-#leftPad{
-	margin: 0 13.25em;
+.icon-fix{
+	margin-bottom: -.125em;
+	margin-right: .1875em;
+}
+
+h2 .icon-fix, .t_Tooltip .icon-fix{
+	margin-bottom: -.3em;
+}
+
+button img.icon-fix{
+	margin-bottom: -.25em;
+	margin-right: .25em;
+}
+
+#toolbar{
+	margin-top: 2em;
+}
+
+#toolbar a{
+	margin-top: .3em;
+	margin-right: 1em;
+	float: left;
+}
+
+#toolbar button{
+	float: right;
 }
 
 #content{
@@ -53,9 +145,6 @@ form input[type="submit"]{
 	
 	padding: 3em 0;
 	
-	border: .0625em solid #C5CAE8;
-	border-bottom: none;
-	border-top: none;
 	background-color: #FFFFFF;
 }
 
@@ -63,12 +152,12 @@ form input[type="submit"]{
 	min-height: 100%;
 	height: auto !important;
 	height: 100%;
-	margin: 0 auto -5.925em;
+	margin: 0 auto -4.1em;
 	
 	background: linear-gradient(-180deg, #ffffff 0%,#f8fafd 15%,#f8fafd 85%,#ffffff 100%);
 }
 
 #footer, #push {
-	height: 3.125em;
-	padding-top: 1em;
+	height: 1em;
+	padding: .5em;
 }
