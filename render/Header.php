@@ -63,24 +63,24 @@
 			
 			if( $rp && $active )
 			{
-				if( $uri != '/graphic/account.php?a=login&code=5' )
+				if( $uri != 'account.php?a=login&code=5' )
 				{
 					header('Location: account.php?a=login&code=5');
 				}
 			}
 			else
 			{
-				if( $script != '/graphic/errors.php' )
+				if( $script != 'errors.php' )
 				{
-					if( $script != '/graphic/index.php' && !$active )
+					if( $script != 'index.php' && !$active )
 					{
 						header('Location: index.php?code=2');
 					}
-					elseif( $script == '/graphic/index.php' && $active )
+					elseif( $script == 'index.php' && $active )
 					{
 						header('Location: home.php');
 					}
-					elseif( $script == '/graphic/index.php' && !$active )
+					elseif( $script == 'index.php' && !$active )
 					{
 						//allow to go to login or error handler page
 					}
