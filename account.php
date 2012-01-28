@@ -8,7 +8,7 @@
 	
 	secure(3); //allow roles <=3
 	
-	$page = new Page("Account Management :: MizzouRec GRS");
+	$page = new Page("Account Management :: Afterthought");
 	$tmpl = new Template();
 	
 	$page->run();

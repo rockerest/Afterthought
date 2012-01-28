@@ -14,7 +14,7 @@
 		case 404:
 				// Page or File Not Found
 				$tmpl->type = "error";
-				$tmpl->message = "It appears that URL is broken.<br />Or the file got moved<br />Or the server threw up because it was too hungover from last night.<br />Just give up and go play with a dog.";
+				$tmpl->message = "It appears that URL is broken.<br />Or the file got moved<br />Or something.<br />It appears the only course of action is to give up completely.";
 				break;
 		case 500:
 				//Server Config or Script Crashed
