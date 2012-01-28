@@ -17,7 +17,7 @@
 			
 			$css = $tmpl->build('footer.css');
 			$html = $tmpl->build('footer.html');
-			//$js = $tmpl->build('footer.js');
+			$js = $tmpl->build('footer.js');
 			
 			$content = array(	'html' => $html,
 								'css' => array(	'code' => $css,
