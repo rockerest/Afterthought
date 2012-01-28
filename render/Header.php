@@ -60,27 +60,27 @@
 			
 			$uri = $_SERVER['REQUEST_URI'];
 			$script = $_SERVER['SCRIPT_NAME'];
-			
+
 			if( $rp && $active )
 			{
-				if( $uri != 'account.php?a=login&code=5' )
+				if( $uri != '/account.php?a=login&code=5' )
 				{
 					header('Location: account.php?a=login&code=5');
 				}
 			}
 			else
 			{
-				if( $script != 'errors.php' )
+				if( $script != '/errors.php' )
 				{
-					if( $script != 'index.php' && !$active )
+					if( $script != '/index.php' && !$active )
 					{
 						header('Location: index.php?code=2');
 					}
-					elseif( $script == 'index.php' && $active )
+					elseif( $script == '/index.php' && $active )
 					{
 						header('Location: home.php');
 					}
-					elseif( $script == 'index.php' && !$active )
+					elseif( $script == '/index.php' && !$active )
 					{
 						//allow to go to login or error handler page
 					}
