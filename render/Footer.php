@@ -19,7 +19,14 @@
 			$html = $tmpl->build('footer.html');
 			//$js = $tmpl->build('footer.js');
 			
-			$content = array('html' => $html, 'css' => array('code' => $css, 'link' => 'footer'), 'js' => $js);
+			$content = array(	'html' => $html,
+								'css' => array(	'code' => $css,
+												'link' => 'footer'
+											),
+								'js' => array(	'code' => $js,
+												'link' => 'footer'
+											)
+							);
 			return $content;
 		}
 	}

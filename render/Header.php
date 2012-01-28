@@ -16,26 +16,74 @@
 		{
 			$tmpl = new Template();
 			
+			$tmpl->active = $active = isset($_SESSION['active']);
+			$tmpl->resetPassword = $rp = 1;
+			
+			if( $active )
+			{
+				$user = User::getByID($_SESSION['userid']);
+				
+				switch( strtolower($user->gender) )
+				{
+					case 'm':
+						$tmpl->icon = 'user';
+						break;
+					case 'f':
+						$tmpl->icon = 'user-female';
+						break;
+					default:
+						$tmpl->icon = 'user-silhouette';
+						break;
+				}
+				
+				$tmpl->account = $_SESSION['userid'];
+				$tmpl->roleid = $_SESSION['roleid'];
+				$tmpl->name = $user->fullname;
+				$tmpl->resetPassword = $rp = $user->authentication->resetPassword;
+			}
+			
 			$css = $tmpl->build('header.css');
 			$html = $tmpl->build('header.html');
 			$js = $tmpl->build('header.js');
 			
-			$active = isset($_SESSION['active']);
+			/*
+			 * force SSL
+			 *
+			 * if($_SERVER["HTTPS"] != "on")
+			 * {
+			 * 	header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+			 * 	exit();
+			 * }
+			 *
+			 * /force SSL
+			 */
+			
+			$uri = $_SERVER['REQUEST_URI'];
 			$script = $_SERVER['SCRIPT_NAME'];
 			
-			if( $script != '/errors.php' )
+			if( $rp && $active )
 			{
-				if( $script != '/index.php' && !$active )
+				if( $uri != '/graphic/account.php?a=login&code=5' )
 				{
-					header('Location: index.php?code=2');
+					header('Location: account.php?a=login&code=5');
 				}
-				elseif( $script == '/index.php' && $active )
+			}
+			else
+			{
+				if( $script != '/graphic/errors.php' )
 				{
-					header('Location: accepted.php');
-				}
-				elseif( $script == '/index.php' && !$active )
-				{
-					//allow to go to login or error handler page
+					if( $script != '/graphic/index.php' && !$active )
+					{
+						header('Location: index.php?code=2');
+					}
+					elseif( $script == '/graphic/index.php' && $active )
+					{
+						header('Location: home.php');
+					}
+					elseif( $script == '/graphic/index.php' && !$active )
+					{
+						//allow to go to login or error handler page
+					}
 				}
 			}
 			
@@ -43,7 +91,8 @@
 								'html' => $html,
 								'css' => array(	'code' => $css,
 												'link' => 'header'),
-								'js' => $js
+								'js' => array(	'code' => $js,
+												'link' => 'header')
 							);
 			return $content;
 		}
