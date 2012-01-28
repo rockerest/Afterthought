@@ -7,15 +7,84 @@
 </div>
 	<?
 	}
-?>
-<form id="login" name="login" action="/components/authentication/Login.php" method="POST" autocomplete="off" >
+	
+	if( $tmpl->a == 'login' )
+	{
+	?>
+<form id="login" name="login" action="components/authentication/Login.php" method="POST" autocomplete="off" class="follow">
 	<label for="email">Email Address</label>
 	<br />
 	<input type="email" name="email" id="email" placeholder="Type your email address here" value="<?= $tmpl->email; ?>" />
 	<br />
 	<label for="password">Password</label>
 	<br />
-	<input type="password" name="password" id="password" />
+	<input type="password" name="password" id="password" placeholder="Type your password here" />
 	<br />
 	<input type="submit" value="Enter" />
 </form>
+
+<p class="link w40 center left-text">
+	<a href="index.php?a=request"><img src="images/icons/key.png" alt="access" class="icon-fix" />Get system access</a>	
+</p>
+	<?
+	}
+	elseif( $tmpl->a == 'request' )
+	{
+		if( $tmpl->code == -1 || $tmpl->code == 6 )
+		{
+			$verify = 'hide';
+		}
+		else
+		{
+			$verify = '';
+		}
+	?>
+<h2 class="bump follow message-box center w50"><img src="images/icons/key--plus-24.png" alt="get access" class="icon-fix" />Create Account</h2>
+<form id="create" name="login" action="components/authentication/create.php" method="POST" class="follow">
+	<label for="email">Email Address</label>
+	<br />
+	<input type="email" name="email" id="email" placeholder="Type your email address here" value="<?= $tmpl->email; ?>" required="required" />
+	<br />
+	<?
+		if( $tmpl->code > 4 || $tmpl->code == -1 )
+		{
+		?>
+	<div id="verify_email" class="<?=$verify;?>">
+		<label for="vemail">Email Address Again</label>
+		<br />
+		<input type="email" name="vemail" id="vemail" placeholder="Email address, one more time" value="<?= $tmpl->ve; ?>" required="required" />
+		<br />
+	</div>
+		<?
+		}
+	?>
+	<label for="password">Password</label>
+	<br />
+	<input type="password" name="password" id="password" placeholder="Type your password here" required="required" />
+	<br />
+	<?
+		if( $tmpl->code > 4 || $tmpl->code == -1 )
+		{
+		?>
+	<div id="verify_password" class="<?=$verify;?>">
+		<label for="vpass">Password Again</label>
+		<br />
+		<input type="password" name="vpass" id="vpass" placeholder="Password, one more time" required="required" />
+		<br />
+	</div>
+		<?
+		}
+	?>
+	<label for="fname">First Name</label>
+	<br />
+	<input type="text" name="fname" id="fname" placeholder="First Name" value="<?= $tmpl->fname; ?>" required="required" />
+	<br />
+	<label for="lname">Last Name</label>
+	<br />
+	<input type="text" name="lname" id="lname" placeholder="Last Name" value="<?= $tmpl->lname; ?>" required="required" />
+	<br />
+	<input type="submit" value="Create" />
+</form>
+	<?
+	}
+?>
