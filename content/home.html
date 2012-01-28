@@ -1,0 +1,37 @@
+<?
+	if( $tmpl->code > -1 )
+	{
+	?>
+<div class="gutter message-box center w75 <?= $tmpl->type; ?>">
+	<?= $tmpl->message; ?>
+</div>
+	<?
+	}
+	
+	switch( $_SESSION['roleid'] )
+	{
+		case 3:
+			?>
+			<div>
+				<p>Very few privileges</p>
+			</div>
+			<?
+			break;
+		case 2:
+			?>
+			<div>
+				<p>Many privileges</p>
+			</div>
+			<?
+			break;
+		case 1:
+			?>
+			<div>
+				<p>All privileges</p>
+			</div>
+			<?
+			break;
+		default:
+			break;
+	}
+?>
