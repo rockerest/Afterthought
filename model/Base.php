@@ -13,7 +13,7 @@
 		private $pass;
 		private $host;
 		
-		private $db;
+		protected $db;
 		
 		public function __construct()
 		{
