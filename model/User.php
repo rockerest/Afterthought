@@ -1,23 +1,35 @@
 <?php
-	require_once('connect.php');
+	require_once('Base.php');
 	
 	require_once('Authentication.php');
+	require_once('Contact.php');
 
 	class User extends Base
 	{
 		public static function getByID($id)
 		{
-			global $db;
+			$base = new Base();
+			
 			$sql = "SELECT * FROM users WHERE userid=?";
 			$values = array($id);
-			$user = $db->qwv($sql, $values);
+			$user = $base->db->qwv($sql, $values);
 			
 			return User::wrap($user);
 		}
 		
+		public static function getAll()
+		{
+			$base = new Base();
+			
+			$sql = "SELECT * FROM users";
+			return User::wrap($base->db->q($sql));
+			
+		}
+		
 		public static function getByAuthenticationIdentity($ident)
 		{
-			global $db;
+			$base = new Base();
+			
 			$auth = Authentication::getByIdentity($ident);
 			
 			if( is_object($auth) )
@@ -30,27 +42,60 @@
 			}
 		}
 		
-		public static function add($fname, $lname, $email, $pass, $roleid)
+		public static function getAllWithRestrictions()
 		{
-			$okay = Authentication::checkIdentity($email);
+			$base = new Base();
+			
+			$sql = "SELECT * FROM users WHERE userid IN
+					(
+						SELECT userid FROM authentication
+						WHERE resetPassword=1
+						OR disabled=1						
+					)";
+			return User::wrap($base->db->q($sql));
+			
+		}
+		
+		public static function search($term = null)
+		{
+			$base = new Base();
+			
+			if( !$term )
+			{
+				$sql = "SELECT * FROM users ORDER BY lname ASC, fname ASC";
+				$res = $base->db->q($sql);
+			}
+			else
+			{
+				$sql = "SELECT * FROM users WHERE lname LIKE ? OR fname LIKE ? OR CONCAT(fname, ' ', lname) LIKE ? ORDER BY lname ASC, fname ASC";
+				$values = array('%' . $term . '%', '%' . $term . '%', '%' . $term . '%');
+				$res = $base->db->qwv($sql, $values);
+			}
+			
+			return User::wrap($res);
+		}
+		
+		public static function add($fname, $lname, $identity, $pass, $roleid)
+		{
+			$okay = Authentication::checkIdentity($identity);
 			
 			if( $okay === 0 )
 			{
-				$user = new User(null, $fname, $lname, $email, null);
+				$user = new User(null, $fname, $lname, null);
 				$res = $user->save();
-				
+
 				if( $res )
 				{
-					$auth = Authentication::addForUser($res->userid, $email, $pass, $roleid);
-					if( $auth )
+					$auth = Authentication::addForUser($res->userid, $identity, $pass, $roleid);
+					$cont = Contact::addForUserID($res->userid, $identity);
+					
+					if( $auth && $cont )
 					{
 						return $res;
 					}
 					else
 					{
-						$status = User::delete($res->userid);
-						
-						if( $status )
+						if( User::deleteByID($res->userid) )
 						{
 							return false;
 						}
@@ -67,19 +112,39 @@
 			}
 		}
 		
-		public static function delete($userid)
+		public static function deleteByID($userid)
 		{
-			global $db;
+			$base = new Base();
+			
+			//save everything in case we need to put them back in.
+			$contact = Contact::toArray(Contact::getByUserID($userid));
+			$auth = Authentication::toArray(Authentication::getByUserID($userid));
+			
+			//get the user object
+			$user = User::getByID($userid);
+			
+			//Delete user
 			$sql = "DELETE FROM users WHERE userid=?";
 			$values = array($userid);
-			$db->qwv($sql, $values);
+			$base->db->qwv($sql, $values);
 			
-			if( $db->stat() )
+			if( $base->db->stat() )
 			{
-				return Authentication::deleteByUserID($userid);
+				return $base->db->stat();
 			}
-			
-			return $db->stat();
+			else
+			{
+				foreach( $contact as $con )
+				{
+					$con->contactid = null;
+					$con->save();
+				}
+				
+				$auth->authenticationid = null;
+				$auth->save();
+				
+				return false;
+			}
 		}
 		
 		public static function wrap($users)
@@ -87,26 +152,26 @@
 			$userList = array();
 			foreach( $users as $user )
 			{
-				array_push($userList, new User($user['userid'], $user['fname'], $user['lname'], $user['email'], $user['nickname']));
+				array_push($userList, new User($user['userid'], $user['fname'], $user['lname'], $user['gender']));
 			}
 			
 			return User::sendback($userList);
 		}
 
-		
 		private $userid;
 		private $fname;
 		private $lname;
-		private $email;
-		private $nickname;
+		private $gender;
 		
-		public function __construct($userid, $fname, $lname, $email, $nick)
+		public function __construct($userid, $fname, $lname, $gender)
 		{
+			//initialize the database connection variables
+			parent::__construct();
+			
 			$this->userid = $userid;
 			$this->fname = $fname;
 			$this->lname = $lname;
-			$this->email = $email;
-			$this->nickname = $nick;
+			$this->gender = $gender;
 		}
 		
 		public function __get($var)
@@ -115,24 +180,36 @@
 			{
 				return Authentication::getByUserID($this->userid);
 			}
+			elseif( strtolower($var) == 'contact' )
+			{
+				return Contact::getByUserID($this->userid);
+			}
+			elseif( strtolower($var) == 'fullname' )
+			{
+				return $this->fname . " " . $this->lname;
+			}
 			else
 			{
 				return $this->$var;
 			}
 		}
 		
+		public function __set($var, $val)
+		{
+			$this->$var = $val;
+		}
+		
 		public function save()
 		{
-			global $db;
 			if( !isset($this->userid) )
 			{
-				$sql = "INSERT INTO users (fname, lname, email, nickname) VALUES(?,?,?,?)";
-				$values = array($this->fname, $this->lname, $this->email, $this->nickame);
-				$db->qwv($sql, $values);
+				$sql = "INSERT INTO users (fname, lname, gender) VALUES(?,?,?)";
+				$values = array($this->fname, $this->lname, $this->gender);
+				$this->db->qwv($sql, $values);
 				
-				if( $db->stat() )
+				if( $this->db->stat() )
 				{
-					$this->userid = $db->last();
+					$this->userid = $this->db->last();
 					return $this;
 				}
 				else
@@ -142,12 +219,14 @@
 			}
 			else
 			{
-				$userSQL = "UPDATE users SET fname=?, lname=?, email=?, nickname=? WHERE userid=?";
-				$values = array ($this->fname, $this->lname, $this->email, $this->nickname, $this->userid);
-				$db->qwv($userSQL, $values);
-				
-				return $db->stat();
+				$userSQL = "UPDATE users SET fname=?, lname=?, gender=? WHERE userid=?";
+				$values = array ($this->fname, $this->lname, $this->gender, $this->userid);
+				$this->db->qwv($userSQL, $values);
+
+				return $this->db->stat();
 			}
+			
+			
 		}
 	}
 ?>

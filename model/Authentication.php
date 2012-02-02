@@ -1,5 +1,5 @@
 <?php
-	require_once('connect.php');
+	require_once('Base.php');
 	
 	require_once('Role.php');
 	require_once('User.php');
@@ -8,17 +8,17 @@
 	{
 		public static function validate($identity, $password)
 		{
-			global $db;
-			
+			$base = new Base();
+						
 			$sql = "SELECT salt FROM authentication WHERE identity=?";
 			$values = array($identity);
-			$res = $db->qwv($sql, $values);
+			$res = $base->db->qwv($sql, $values);
 			
 			$saltPass = hash('whirlpool', $res[0]['salt'].$password);
 			
 			$sql = "SELECT * FROM authentication WHERE identity=? AND password=?";
 			$values = array($identity, $saltPass);
-			$res = $db->qwv($sql, $values);
+			$res = $base->db->qwv($sql, $values);
 			
 			if( count($res) != 1 )
 			{
@@ -41,10 +41,11 @@
 		
 		public static function checkIdentity($ident)
 		{
-			global $db;
+			$base = new Base();
+			
 			$sql = "SELECT authenticationid FROM authentication WHERE identity=?";
 			$values = array($ident);
-			$res = $db->qwv($sql, $values);
+			$res = $base->db->qwv($sql, $values);
 			
 			return count($res);
 		}
@@ -53,7 +54,7 @@
 		{
 			$vals = Authentication::hash($pass);
 
-			$auth = new Authentication(null, $ident, $vals[0], $vals[1], $id, $roleid, 1, 0);
+			$auth = new Authentication(null, $ident, $vals[0], $vals[1], $id, $roleid, 0, 0);
 			$save = $auth->save();
 			if( $save )
 			{
@@ -67,32 +68,79 @@
 		
 		public static function getByIdentity($ident)
 		{
-			global $db;
+			$base = new Base();
+			
 			$sql = "SELECT * FROM authentication WHERE identity=?";
 			$values = array($ident);
-			$res = $db->qwv($sql, $values);
+			$res = $base->db->qwv($sql, $values);
 			
 			return Authentication::wrap($res);
 		}
 		
 		public static function getByUserID($id)
 		{
-			global $db;
+			$base = new Base();
+			
 			$authSQL = "SELECT * FROM authentication WHERE userid=?";
 			$values = array($id);
-			$auth = $db->qwv($authSQL, $values);
+			$auth = $base->db->qwv($authSQL, $values);
 			
 			return Authentication::wrap($auth);
 		}
 		
+		public static function disableByUserID($id)
+		{
+			$base = new Base();
+			
+			$sql = "UPDATE authentication SET disabled=1 WHERE userid=?";
+			$values = array($id);
+			$del = $base->db->qwv($sql, $values);
+			
+			return $base->db->stat();
+		}
+		
+		public static function enableByUserID($id)
+		{
+			$base = new Base();
+			
+			$sql = "UPDATE authentication SET disabled=0 WHERE userid=?";
+			$values = array($id);
+			$del = $base->db->qwv($sql, $values);
+			
+			return $base->db->stat();
+		}
+		
+		public static function forcePasswordChangeByUserID($id)
+		{
+			$base = new Base();
+			
+			$sql = "UPDATE authentication SET resetPassword=1 WHERE userid=?";
+			$values = array($id);
+			$del = $base->db->qwv($sql, $values);
+			
+			return $base->db->stat();
+		}
+		
+		public static function acceptPasswordByUserID($id)
+		{
+			$base = new Base();
+			
+			$sql = "UPDATE authentication SET resetPassword=0 WHERE userid=?";
+			$values = array($id);
+			$del = $base->db->qwv($sql, $values);
+			
+			return $base->db->stat();
+		}
+		
 		public static function deleteByUserID($id)
 		{
-			global $db;
+			$base = new Base();
+			
 			$delSQL = "DELETE FROM authentication WHERE userid=?";
 			$values = array($id);
-			$del = $db->qwv($delSQL, $values);
+			$del = $base->db->qwv($delSQL, $values);
 			
-			return $db->stat();
+			return $base->db->stat();
 		}
 	
 		public static function wrap($auths)
@@ -118,6 +166,9 @@
 	
 		public function __construct($id, $ident, $salt, $pass, $userid, $roleid, $reset, $disabled)
 		{
+			//initialize the database connection variables
+			parent::__construct();
+			
 			$this->roleid = $roleid;
 			$this->userid = $userid;
 			
@@ -153,7 +204,7 @@
 			}
 			elseif( $name == 'password' )
 			{
-				$vals = Authentication::hash($value);
+				$vals = $this->hash($value);
 				$this->salt = $vals[0];
 				$this->password = $vals[1];
 			}
@@ -161,21 +212,19 @@
 			{
 				$this->$name = $value;
 			}
-			return $this->save();
 		}
 		
 		public function save()
 		{
-			global $db;
 			if( isset($this->authenticationid) )
 			{
 				if( $this->allSet() )
 				{
 					$authSQL = "UPDATE authentication SET identity=?, salt=?, password=?, roleid=?, resetPassword=?, disabled=? WHERE authenticationid=? AND userid=?";
-					$values = array($this->identity, $this->salt, $this->password, $this->roleid, $this->authenticationid, $this->userid, $this->resetPassword, $this->disabled);
-					$db->qwv($authSQL, $values);
+					$values = array($this->identity, $this->salt, $this->password, $this->roleid, $this->resetPassword, $this->disabled, $this->authenticationid, $this->userid);
+					$this->db->qwv($authSQL, $values);
 					
-					if( $db->stat() )
+					if( $this->db->stat() )
 					{
 						return $this;
 					}
@@ -195,11 +244,11 @@
 				{
 					$authSQL = "INSERT INTO authentication (identity, salt, password, userid, roleid, resetPassword, disabled) VALUES (?,?,?,?,?,?,?)";
 					$values = array($this->identity, $this->salt, $this->password, $this->userid, $this->roleid, $this->resetPassword, $this->disabled);
-					$db->qwv($authSQL, $values);
+					$this->db->qwv($authSQL, $values);
 					
-					if( $db->stat() )
+					if( $this->db->stat() )
 					{
-						$this->authenticationid = $db->last();
+						$this->authenticationid = $this->db->last();
 						return $this;
 					}
 					else

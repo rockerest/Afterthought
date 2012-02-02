@@ -1,24 +1,26 @@
 <?php
-	require_once('connect.php');
+	require_once('Base.php');
 
 	class Contact extends Base
 	{
 		public static function getByID($id)
 		{
-			global $db;
+			$base = new Base();
+			
 			$sql = "SELECT * FROM contact WHERE contactid=?";
 			$values = array($id);
-			$cont = $db->qwv($sql, $values);
+			$cont = $base->db->qwv($sql, $values);
 			
 			return Contact::wrap($cont);
 		}
 		
 		public static function getByUserID($id)
 		{
-			global $db;
+			$base = new Base();
+			
 			$sql = "SELECT * FROM contact WHERE userid=?";
 			$values = array($id);
-			$cont = $db->qwv($sql, $values);
+			$cont = $base->db->qwv($sql, $values);
 			
 			return Contact::wrap($cont);
 		}
@@ -31,12 +33,13 @@
 		
 		public static function deleteByUserID($userid)
 		{
-			global $db;
+			$base = new Base();
+			
 			$sql = "DELETE FROM contact WHERE userid=?";
 			$values = array($userid);
-			$db->qwv($sql, $values);
+			$base->db->qwv($sql, $values);
 			
-			return $db->stat();
+			return $base->db->stat();
 		}
 		
 		public static function wrap($contact)
@@ -58,6 +61,9 @@
 		
 		public function __construct($contactid, $userid, $phone, $email)
 		{
+			//initialize the database connection variables
+			parent::__construct();
+			
 			$this->contactid = $contactid;
 			$this->userid = $userid;
 			$this->phone = $phone;
@@ -83,16 +89,15 @@
 		
 		public function save()
 		{
-			global $db;
 			if( !isset($this->contactid) )
 			{
 				$sql = "INSERT INTO contact (userid, phone, email) VALUES(?,?,?)";
 				$values = array($this->userid, $this->phone, $this->email);
-				$db->qwv($sql, $values);
+				$this->db->qwv($sql, $values);
 				
-				if( $db->stat() )
+				if( $this->db->stat() )
 				{
-					$this->contactid = $db->last();
+					$this->contactid = $this->db->last();
 					return $this;
 				}
 				else
@@ -104,9 +109,9 @@
 			{
 				$sql = "UPDATE contact SET userid=?, phone=?, email=? WHERE contactid=?";
 				$values = array ($this->userid, $this->phone, $this->email, $this->contactid);
-				$db->qwv($sql, $values);
+				$this->db->qwv($sql, $values);
 
-				return $db->stat();
+				return $this->db->stat();
 			}
 		}
 		

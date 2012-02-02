@@ -1,15 +1,16 @@
 <?php
-	require_once('connect.php');
+	require_once('Base.php');
 	require_once('User.php');
 	
 	class Quick_Login extends Base
 	{
 		public static function getByHash($hash)
 		{
-			global $db;
+			$base = new Base();
+			
 			$sql = "SELECT * FROM quick_login WHERE hash=? AND used=0 AND expires>?";
 			$values = array($hash, time());
-			$ql = $db->qwv($sql, $values);
+			$ql = $base->db->qwv($sql, $values);
 			
 			return Quick_Login::wrap($ql);
 		}
@@ -48,6 +49,9 @@
 		
 		public function __construct($quick_loginid, $hash, $userid, $expires, $used)
 		{
+			//initialize the database connection variables
+			parent::__construct();
+			
 			$this->quick_loginid = $quick_loginid;
 			$this->hash = $hash;
 			$this->userid = $userid;
@@ -71,16 +75,15 @@
 		
 		public function save()
 		{
-			global $db;
 			if( !isset($this->quick_loginid) )
 			{
 				$sql = "INSERT INTO quick_login (hash, userid, expires, used) VALUES(?,?,?,?)";
 				$values = array($this->hash, $this->userid, $this->expires, $this->used);
-				$db->qwv($sql, $values);
+				$this->db->qwv($sql, $values);
 				
-				if( $db->stat() )
+				if( $this->db->stat() )
 				{
-					$this->quick_loginid = $db->last();
+					$this->quick_loginid = $this->db->last();
 					return $this;
 				}
 				else
@@ -92,9 +95,9 @@
 			{
 				$sql = "UPDATE quick_login SET hash=?, userid=?, expires=?, used=? WHERE quick_loginid=?";
 				$values = array ($this->hash, $this->userid, $this->expires, $this->used, $this->quick_loginid);
-				$db->qwv($sql, $values);
+				$this->db->qwv($sql, $values);
 
-				return $db->stat();
+				return $this->db->stat();
 			}
 		}
 	}
