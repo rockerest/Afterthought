@@ -1,22 +1,20 @@
 Aferthought is a php code repository to expediate setting up a new website.
 
 It relies heavily on [my framework](https://github.com/rockerest/myframework).  
-You can see a demo of this package at [afterthought.thomasrandolph.info](http://afterthought.thomasrandolph.info). Log in with username `admin@example.com` and password `password`.
+You can see a demo of this package at [afterthought.thomasrandolph.info](http://afterthought.thomasrandolph.info).
 
 There are two files that you need that are not included in this repository for various reasons.
 
-1. the database credentials.  Create a file called `afterthought.db` and place it in your copy of `backbone` from [my framework](https://github.com/rockerest/myframework) linked above.  
+1. the database credentials.  Create a file called `afterthought.conf` and place it in your copy of `backbone` from [my framework](https://github.com/rockerest/myframework) linked above.  
   place the following lines in it:  
-    `<?php`  
-    `    $GLOBALS['dbname'] = $dbname = "afterthought";`  
-    `    $GLOBALS['user'] = $user = "[YourDatabaseUsername]";`  
-    `    $GLOBALS['pass'] = $pass = "[TheUser'sPassword";`  
-    `    $GLOBALS['host'] = $host = "[TheHostName/IPOfTheDBServer]";`  
-    `?>`  
+    `$config['db']['dbname'] = "afterthought";`  
+    `$config['db']['user'] = "[YourDatabaseUsername]";`  
+    `$config['db']['pass'] = "[TheUser'sPassword";`  
+    `$config['db']['host'] = "[TheHostName/IPOfTheDBServer]";`  
 	
 2. a decent .htaccess file to hide that database file.  
-  I include the following lines to hide the .db file:  
-    `<Files *.db>`  
+  I include the following lines to hide the .conf file:  
+    `<Files *.conf>`  
     `    order deny,allow`  
     `    deny from all`  
     `</Files>`  
