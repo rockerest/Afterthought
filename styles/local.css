@@ -59,7 +59,7 @@ fieldset, legend{
 	border-radius: .2em; 
 }
 
-form input:not([type="submit"]),
+form input:not([type="submit"],[type="checkbox"]),
 form select,
 form textarea{
 	font-size: 1em;
