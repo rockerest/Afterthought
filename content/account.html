@@ -2,8 +2,8 @@
 	if( $tmpl->code > -1 )
 	{
 	?>
-<div class="gutter message-box center w75 <?= $tmpl->type; ?>">
-	<?= $tmpl->message; ?>
+<div class="gutter message-box center w75 <?= $tmpl->alert['type']; ?>">
+	<?= $tmpl->alert['message']; ?>
 </div>
 	<?
 	}

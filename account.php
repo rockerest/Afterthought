@@ -51,33 +51,33 @@
 	{
 		case 0:
 				// Account updated successfully
-				$tmpl->type = "okay";
-				$tmpl->message = "The account was updated successfully.";
+				$tmpl->alert['type'] = "okay";
+				$tmpl->alert['message'] = "The account was updated successfully.";
 				break;
 		case 1:
 				// An unknown error occurred (account update)
-				$tmpl->type = "error";
-				$tmpl->message = "An unknown error occurred while attempting to save the changes.";
+				$tmpl->alert['type'] = "error";
+				$tmpl->alert['message'] = "An unknown error occurred while attempting to save the changes.";
 				break;
 		case 2:
 				// The required fields for adding a new user weren't completed
-				$tmpl->type = "error";
-				$tmpl->message = "You must complete all of the fields in the \"Required Information\" set.";
+				$tmpl->alert['type'] = "error";
+				$tmpl->alert['message'] = "You must complete all of the fields in the \"Required Information\" set.";
 				break;
 		case 3:
 				// An unknown error occurred (new account)
-				$tmpl->type = "error";
-				$tmpl->message = "An unknown error occurred while attempting to create the account.";
+				$tmpl->alert['type'] = "error";
+				$tmpl->alert['message'] = "An unknown error occurred while attempting to create the account.";
 				break;
 		case 4:
 				// The passwords (changing password) didn't match
-				$tmpl->type = "error";
-				$tmpl->message = "The \"New Password\" and \"Verify New Password\" fields must match.";
+				$tmpl->alert['type'] = "error";
+				$tmpl->alert['message'] = "The \"New Password\" and \"Verify New Password\" fields must match.";
 				break;
 		case 5:
 				// User is required to change their password
-				$tmpl->type = "alert";
-				$tmpl->message = "You must change your password before continuing.";
+				$tmpl->alert['type'] = "alert";
+				$tmpl->alert['message'] = "You must change your password before continuing.";
 				break;
 		case -1:
 		default:

@@ -13,19 +13,19 @@
 	{
 		case 404:
 				// Page or File Not Found
-				$tmpl->type = "error";
-				$tmpl->message = "It appears that URL is broken.<br />Or the file got moved<br />Or something.<br />It appears the only course of action is to give up completely.";
+				$tmpl->alert['type'] = "error";
+				$tmpl->alert['message'] = "It appears that URL is broken.<br />Or the file got moved<br />Or something.<br />It appears the only course of action is to give up completely.";
 				break;
 		case 500:
 				//Server Config or Script Crashed
-				$tmpl->type = "error";
-				$tmpl->message = "Oh jeez.  I'm so sorry.  I don't even know what happened.<br />I swear this doesn't usually happen.<br />...<br />Um, the server is broken.  Come back later.";
+				$tmpl->alert['type'] = "error";
+				$tmpl->alert['message'] = "Oh jeez.  I'm so sorry.  I don't even know what happened.<br />I swear this doesn't usually happen.<br />...<br />Um, the server is broken.  Come back later.";
 				break;
 		case 200:
 		default:
 				//Server Config or Script Crashed
-				$tmpl->type = "okay";
-				$tmpl->message = "Oh, you think you're SO sneaky.  Move along, nothing to see here.";
+				$tmpl->alert['type'] = "okay";
+				$tmpl->alert['message'] = "Oh, you think you're SO sneaky.  Move along, nothing to see here.";
 				break;
 	}
 	
