@@ -13,6 +13,7 @@
 	$tmpl = new Template();
 	
 	$page->run();
+	$tmpl->self = $page->self;
 	
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : -1;
 	$tmpl->users = User::toArray(User::getAll());

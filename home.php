@@ -11,16 +11,16 @@
 	secure(4); //let anyone in who is logged in
 	
 	$page->run();
+	$tmpl->self = $page->self;
 	
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : -1;
-	$user = User::getByID($_SESSION['userid']);
 
 	switch( $tmpl->code )
 	{
 		case 0:
 				// user logged in successfully
 				$tmpl->alert['type'] = "okay fadeout"; //style the messagebox AND target it to fade out.
-				$tmpl->alert['message'] = "Welcome, {$user->fname}";
+				$tmpl->alert['message'] = "Welcome, {$tmpl->self->fname}";
 				break;
 		default:
 				break;

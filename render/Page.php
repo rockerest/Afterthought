@@ -10,6 +10,8 @@
 		protected $footer;
 
 		private $page_title;
+		
+		public $self;
 
         public function __construct($page_title)
 		{
@@ -23,6 +25,8 @@
 			
 			$this->header->run();
 			$this->footer->run();
+			
+			$this->self = $this->header->self;
         }
 
         public function build($appContent)

@@ -12,6 +12,7 @@
 	$tmpl = new Template();
 	
 	$page->run();
+	$tmpl->self = $page->self;
 	
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : -1;
 	$userid = isset( $_GET['uid'] ) ? $_GET['uid'] : $_SESSION['userid'];
@@ -24,15 +25,14 @@
 	else
 	{
 		$attempt = User::getByID($userid);
-		$self = User::getByID($_SESSION['userid']);
 		
-		if( $self->authentication->roleid == 1 )
+		if( $tmpl->self->authentication->roleid == 1 )
 		{
 			$user = $attempt;
 		}
 		else
 		{
-			$user = $self;
+			$user = $tmpl->self;
 		}
 	}
 	

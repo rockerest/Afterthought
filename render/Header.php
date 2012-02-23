@@ -4,8 +4,14 @@
 	
 	class Header
 	{
+		public $self;
+		
 		public function __construct()
 		{
+			if( isset($_SESSION['active']) )
+			{
+				$this->self = User::getByID($_SESSION['userid']);
+			}
 		}
 		
 		public function run()
