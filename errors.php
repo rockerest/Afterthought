@@ -30,8 +30,8 @@
 	}
 	
 	$html = $tmpl->build('error.html');
-	//$css = $tmpl->build('error.css');
-	//$js = $tmpl->build('error.js');
+	$css = $tmpl->build('error.css');
+	$js = $tmpl->build('error.js');
 	
 	$appContent = array(
 						'html'	=>	$html,
