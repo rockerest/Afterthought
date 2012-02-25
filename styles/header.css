@@ -5,29 +5,33 @@ header{
 	line-height: 2.5em;
 
 	border-bottom: .0625em solid #C5CAE8;
-	padding: .25em 0;
 
 	background: #F1F1F1;
 	background: linear-gradient(-90deg, #FFFFFF 0%, #E5ECF9 100%);
 }
 
 #header-content{
+	height: 100%;
 	width: 64em;
 	margin: auto;
 }
 
-header #title{
+header h1, header h2{
 	color: #192E5E;
 	font-size: 1em;
     
 	float: left;
 }
 
+header h2{
+	font-size: .35em;
+}
+
 header #menu{
 	text-align: left;
 }
 
-header #control{
+header nav{
 	float: right;
 }
 

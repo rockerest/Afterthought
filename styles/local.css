@@ -26,7 +26,7 @@ em{
 	font-style: italic;
 }
 
-h2{
+h3{
 	background-color: #E9EBF6;
 }
 
@@ -116,7 +116,7 @@ tbody tr:hover{
 	margin-right: .1875em;
 }
 
-h2 .icon-fix, .t_Tooltip .icon-fix{
+h3 .icon-fix, .t_Tooltip .icon-fix{
 	margin-bottom: -.3em;
 }
 

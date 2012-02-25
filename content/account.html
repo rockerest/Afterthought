@@ -12,7 +12,7 @@
 	{
 		$self = $tmpl->user->userid == $_SESSION['userid'];
 	?>
-<h2 class="bump follow message-box center w50"><img src="images/icons/user--pencil-24.png" alt="manage" class="icon-fix" /><?=$tmpl->user->fullName;?></h2>
+<h3 class="bump follow message-box center w50"><img src="images/icons/user--pencil-24.png" alt="manage" class="icon-fix" /><?=$tmpl->user->fullName;?></h3>
 <form id="account" class="clear" method="POST" action="components/account/manage.php?uid=<?=$tmpl->user->userid;?>">
 	<fieldset class="push" >
 		<legend>Personal Information</legend>
@@ -52,7 +52,7 @@
 	elseif( $tmpl->action == 'addnew' )
 	{
 	?>
-<h2 class="bump follow message-box center w50"><img src="images/icons/user--plus-24.png" alt="add empl" class="icon-fix" /> New Employee</h2>
+<h3 class="bump follow message-box center w50"><img src="images/icons/user--plus-24.png" alt="add empl" class="icon-fix" /> New Employee</h3>
 <?
 	$qs = ($gid || $tmpl->tb) ? "?" : null;
 	
@@ -135,7 +135,7 @@
 	elseif( $tmpl->action == 'login' )
 	{
 	?>
-<h2 class="bump follow message-box center w50"><img src="images/icons/key--pencil-24.png" alt="edit login" class="icon-fix" /> Edit Login</h2>
+<h3 class="bump follow message-box center w50"><img src="images/icons/key--pencil-24.png" alt="edit login" class="icon-fix" /> Edit Login</h3>
 <form id="account" class="clear center login" method="POST" action="components/account/manage.php?uid=<?=$tmpl->user->userid;?>">
 	<fieldset class="center" >
 		<legend>Login Information</legend>

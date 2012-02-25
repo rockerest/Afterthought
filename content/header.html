@@ -1,7 +1,8 @@
 <div id="header-content" class="clear">
-	<div id="title" class="pointer">
-		<img src="images/logo.png" alt="Afterthought" />
-	</div>
+	<hgroup>
+		<h1><img src="images/logo.png" alt="Afterthought" /></h1>
+		<h2>Making your code easy doesn't have to be an afterthought.</h2>
+	</hgroup>
 	<div id="menu" class="left-text hide">
 		<?
 			if( $tmpl->active )
@@ -26,7 +27,7 @@
 	<div id="user" class="left-text hide">
 		<a href="logout.php" id="head_logout"><img src="images/icons/door--arrow.png" alt="door" class="icon-fix" />Logout</a>
 	</div>
-	<div id="control">
+	<nav>
 		<?
 			if( $tmpl->active )
 			{
@@ -44,5 +45,5 @@
 				//the not logged in toolbar
 			}
 		?>
-	</div>
+	</nav>
 </div>
