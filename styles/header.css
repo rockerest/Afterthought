@@ -1,4 +1,4 @@
-#header{
+header{
 	color: #555555;
 	
 	height: 2.5em;
@@ -16,18 +16,18 @@
 	margin: auto;
 }
 
-#header #title{
+header #title{
 	color: #192E5E;
 	font-size: 1em;
     
 	float: left;
 }
 
-#header #menu{
+header #menu{
 	text-align: left;
 }
 
-#header #control{
+header #control{
 	float: right;
 }
 

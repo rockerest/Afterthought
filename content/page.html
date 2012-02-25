@@ -7,7 +7,7 @@
 	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
 	
-	<link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css">
+	<link rel="stylesheet" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css">
 	
 	<?php
 		$cssLinks = array(
@@ -24,17 +24,17 @@
 		$css = implode(",", $cssLinks);
 	?>
 		
-	<link rel="stylesheet" href="components/system/CSS.php?q=<?= $css; ?>" type="text/css"/>
+	<link rel="stylesheet" href="components/system/CSS.php?q=<?= $css; ?>" />
 	<title>
-		<?= $tmpl->title; ?>
+		<?=$tmpl->title; ?>
 	</title>		
 </head>
 
-<body>
+<body id="<?=$tmpl->id;?>">
 	<div id="sticky-wrap">
-		<div id="header">
+		<header>
 			<?= $tmpl->headerContent['html'] ."\n"; ?>
-		</div>
+		</header>
 		
 		<div id="page" class="clear">
 			<div id="content" class="center">
@@ -44,9 +44,9 @@
 		
 		<div id="push"></div>
 	</div>
-	<div id="footer">
+	<footer>
 		<?= $tmpl->footerContent['html'] ."\n"; ?>
-	</div>
+	</footer>
 	<noscript>
 		<div id="nojs" style="display: block;">
 			It looks like you don't have Javascript enabled.  This site uses javascript for most functionality, and you will be missing out on a lot of cool features and many abilities without it!
@@ -76,6 +76,6 @@
 		$js = implode(",", $jsLinks);
 	?>
 	
-	<script type="text/javascript" src="components/system/JS.php?q=<?= $js; ?>"></script>
+	<script src="components/system/JS.php?q=<?= $js; ?>"></script>
 </body>
 </html>

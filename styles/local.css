@@ -14,7 +14,7 @@ a:hover{
 	color: #5555CC;
 }
 
-#header a{
+header a{
 	text-decoration: none;
 }
 
@@ -162,7 +162,7 @@ button img.icon-fix{
 	background: linear-gradient(-180deg, #ffffff 0%,#f8fafd 15%,#f8fafd 85%,#ffffff 100%);
 }
 
-#footer, #push {
+footer, #push {
 	height: 1em;
 	padding: .5em;
 }
