@@ -9,7 +9,7 @@
 	
 	secure(2); // only allow admins or staff (roleid <= 2)
 
-	$page = new Page("Users :: Afterthought");
+	$page = new Page("Users :: Afterthought", 'users');
 	$tmpl = new Template();
 	
 	$page->run();

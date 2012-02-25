@@ -4,7 +4,7 @@
 	require_once('Page.php');
 	require_once('Template.php');
 
-	$page = new Page("Afterthought");
+	$page = new Page("Afterthought", 'index');
 	$tmpl = new Template();
 	
 	$page->run();

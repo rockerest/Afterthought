@@ -10,12 +10,14 @@
 		protected $footer;
 
 		private $page_title;
+		private $body_id;
 		
 		public $self;
 
-        public function __construct($page_title)
+        public function __construct($page_title, $body_id)
 		{
-			$this->page_title = $page_title;		
+			$this->page_title = $page_title;
+			$this->body_id = $body_id;
         }
 
 		public function run()
@@ -36,6 +38,7 @@
             $tmpl->appContent = $appContent;
 			$tmpl->footerContent = $this->footer->generate();
 			$tmpl->title = $this->page_title;
+			$tmpl->id = $this->body_id;
 
             return $tmpl->build('page.html');
         }

@@ -8,7 +8,7 @@
 	
 	secure(3); //allow roles <=3
 	
-	$page = new Page("Account Management :: Afterthought");
+	$page = new Page('Account Management :: Afterthought', 'account');
 	$tmpl = new Template();
 	
 	$page->run();

@@ -5,7 +5,7 @@
 	require_once('Template.php');
 	
 	require_once('User.php');
-	$page = new Page("Home :: Afterthought");
+	$page = new Page("Home :: Afterthought", 'home');
 	$tmpl = new Template();
 	
 	secure(4); //let anyone in who is logged in

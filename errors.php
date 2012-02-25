@@ -5,7 +5,7 @@
 	
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : 200;
 	
-	$page = new Page("HTTP Status " . $tmpl->code . " Page");
+	$page = new Page("HTTP Status " . $tmpl->code . " Page", 'errors');
 	
 	$page->run();
 	
