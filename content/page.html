@@ -1,81 +1,81 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<base href="/" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<head>
+		<base href="/" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
-	<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
-	
-	<link rel="stylesheet" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css">
-	
-	<?php
-		$cssLinks = array(
-							"global",
-							"local",
-							"css3buttons",
-							"tipped",
-							"jquery.ui",
-							$tmpl->headerContent['css']['link'],
-							$tmpl->appContent['css']['link'],
-							$tmpl->footerContent['css']['link']
-						);
-						
-		$css = implode(",", $cssLinks);
-	?>
+		<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
 		
-	<link rel="stylesheet" href="components/system/CSS.php?q=<?= $css; ?>" />
-	<title>
-		<?=$tmpl->title; ?>
-	</title>		
-</head>
+		<link rel="stylesheet" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css">
+		
+		<?php
+			$cssLinks = array(
+								"global",
+								"local",
+								"css3buttons",
+								"tipped",
+								"jquery.ui",
+								$tmpl->headerContent['css']['link'],
+								$tmpl->appContent['css']['link'],
+								$tmpl->footerContent['css']['link']
+							);
+							
+			$css = implode(",", $cssLinks);
+		?>
+			
+		<link rel="stylesheet" href="components/system/CSS.php?q=<?= $css; ?>" />
+		<title>
+			<?=$tmpl->title; ?>
+		</title>		
+	</head>
 
-<body id="<?=$tmpl->id;?>">
-	<div id="sticky-wrap">
-		<header>
-			<?= $tmpl->headerContent['html'] ."\n"; ?>
-		</header>
-		
-		<div id="page" class="clear">
-			<div id="content" class="center">
-				<?= $tmpl->appContent['html'] . "\n"; ?>
+	<body id="<?=$tmpl->id;?>">
+		<div id="sticky-wrap">
+			<header>
+				<?= $tmpl->headerContent['html'] ."\n"; ?>
+			</header>
+			
+			<div id="page" class="clear">
+				<section id="content" class="center">
+					<?= $tmpl->appContent['html'] . "\n"; ?>
+				</section>
 			</div>
+			
+			<div id="push"></div>
 		</div>
-		
-		<div id="push"></div>
-	</div>
-	<footer>
-		<?= $tmpl->footerContent['html'] ."\n"; ?>
-	</footer>
-	<noscript>
-		<div id="nojs" style="display: block;">
-			It looks like you don't have Javascript enabled.  This site uses javascript for most functionality, and you will be missing out on a lot of cool features and many abilities without it!
-			<br />
-			It is recommended that you turn Javascript ON in your browser.
-		</div>
-	</noscript>
+		<footer>
+			<?= $tmpl->footerContent['html'] ."\n"; ?>
+		</footer>
+		<noscript>
+			<div id="nojs" style="display: block;">
+				It looks like you don't have Javascript enabled.  This site uses javascript for most functionality, and you will be missing out on a lot of cool features and many abilities without it!
+				<br />
+				It is recommended that you turn Javascript ON in your browser.
+			</div>
+		</noscript>
 
-	<!-- External Scripts -->
-	<?
-		include_once('../jquery/jQuery.php'); 
-		$jq = new jQuery();
-		print $jq->all;
+		<!-- External Scripts -->
+		<?
+			include_once('../jquery/jQuery.php'); 
+			$jq = new jQuery();
+			print $jq->all;
+			
+			$jsLinks = array(
+								"global",
+								"jquery.ui.custom.min",
+								"excanvas",
+								"spinners",
+								"tipped",
+								"local",
+								$tmpl->headerContent['js']['link'],
+								$tmpl->appContent['js']['link'],
+								$tmpl->footerContent['js']['link']
+							);
+							
+			$js = implode(",", $jsLinks);
+		?>
 		
-		$jsLinks = array(
-							"global",
-							"jquery.ui.custom.min",
-							"excanvas",
-							"spinners",
-							"tipped",
-							"local",
-							$tmpl->headerContent['js']['link'],
-							$tmpl->appContent['js']['link'],
-							$tmpl->footerContent['js']['link']
-						);
-						
-		$js = implode(",", $jsLinks);
-	?>
-	
-	<script src="components/system/JS.php?q=<?= $js; ?>"></script>
-</body>
+		<script src="components/system/JS.php?q=<?= $js; ?>"></script>
+	</body>
 </html>
