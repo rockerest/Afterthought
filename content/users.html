@@ -9,7 +9,7 @@
 	}
 ?>
 
-<h3 class="bump follow message-box center w50"><img src="images/icons/users-24.png" alt="all employees" class="icon-fix" />All Users</h3>
+<h3 class="bump follow message-box center w50"><img src="images/icons/24/custom/users.png" alt="all employees" class="icon-fix" />All Users</h3>
 <?
 	if( $tmpl->users )
 	{
@@ -27,7 +27,7 @@
 		<tfoot>
 			<tr>
 				<td colspan="5">
-					<a href="account.php?a=addnew&amp;tb=e" class="float-r"><img src="images/icons/user--plus.png" alt="add user" class="icon-fix" />Add User</a>
+					<a href="account.php?a=addnew&amp;tb=e" class="float-r"><img src="images/icons/16/user--plus.png" alt="add user" class="icon-fix" />Add User</a>
 				</td>
 			</tr>
 		</tfoot>
@@ -47,40 +47,40 @@
 				<tr>
 					<td><a href="account.php?uid=<?=$user->userid;?>"><?=$user->fullName;?></a></td>
 					<td>
-						<a href="mailto:<?=$user->contact->email;?>"><img src="images/icons/mail.png" alt="envelope" class="icon-fix tipped" title="Open new email to <?=$user->fullname;?>"/></a>
+						<a href="mailto:<?=$user->contact->email;?>"><img src="images/icons/16/mail.png" alt="envelope" class="icon-fix tipped" title="Open new email to <?=$user->fullname;?>"/></a>
 					</td>
 					<td>
-						<?if($reduce){?><a href="components/account/reduce.php?uid=<?=$user->userid;?>&amp;tb=e"><img src="images/icons/arrow-270.png" alt="reduce" class="icon-fix tipped" title="Reduce <?=$user->fullname;?>'s Role"/></a><?}?>
+						<?if($reduce){?><a href="components/account/reduce.php?uid=<?=$user->userid;?>&amp;tb=e"><img src="images/icons/16/arrow-270.png" alt="reduce" class="icon-fix tipped" title="Reduce <?=$user->fullname;?>'s Role"/></a><?}?>
 						<?=$user->authentication->role->name;?>
-						<?if($elevate){?><a href="components/account/elevate.php?uid=<?=$user->userid;?>&amp;tb=e"><img src="images/icons/arrow-090.png" alt="elevate" class="icon-fix tipped" title="Elevate <?=$user->fullname;?>'s Role"/></a><?}?>						
+						<?if($elevate){?><a href="components/account/elevate.php?uid=<?=$user->userid;?>&amp;tb=e"><img src="images/icons/16/arrow-090.png" alt="elevate" class="icon-fix tipped" title="Elevate <?=$user->fullname;?>'s Role"/></a><?}?>						
 					</td>
 					<td>
-						<a href="account.php?uid=<?=$user->userid;?>"><img src="images/icons/pencil.png" alt="edit" title="Edit User" class="tipped" /></a>
+						<a href="account.php?uid=<?=$user->userid;?>"><img src="images/icons/16/pencil.png" alt="edit" title="Edit User" class="tipped" /></a>
 						<a href="components/account/toggleAccount.php?uid=<?=$user->userid;?>&amp;tb=e">
 						<?
 						if( !$user->authentication->disabled )
 						{
-							print '<img src="images/icons/door-open.png" alt="disable" title="Disable Login" class="tipped" /></a>';
+							print '<img src="images/icons/16/door-open.png" alt="disable" title="Disable Login" class="tipped" /></a>';
 						}
 						else
 						{
-							print '<img src="images/icons/door.png" alt="enable" title="Enable Login" class="tipped" /></a>';
+							print '<img src="images/icons/16/door.png" alt="enable" title="Enable Login" class="tipped" /></a>';
 						}
 						?>
 						<a href="components/account/toggleResetPassword.php?uid=<?=$user->userid;?>&amp;tb=e">
 						<?
 						if( !$user->authentication->resetPassword )
 						{
-							print '<img src="images/icons/tick-button.png" alt="reset" title="Force Password Change" class="tipped" /></a>';
+							print '<img src="images/icons/16/tick-button.png" alt="reset" title="Force Password Change" class="tipped" /></a>';
 						}
 						else
 						{
-							print '<img src="images/icons/exclamation-button.png" alt="reset" title="Accept Current Password" class="tipped" /></a>';
+							print '<img src="images/icons/16/exclamation-button.png" alt="reset" title="Accept Current Password" class="tipped" /></a>';
 						}
 						?>
 					</td>
 					<td>
-						<a href="components/account/delete.php?uid=<?=$user->userid;?>&amp;tb=e"><img src="images/icons/minus.png" alt="delete" title="Delete User (permanent)" class="tipped" /></a>
+						<a href="components/account/delete.php?uid=<?=$user->userid;?>&amp;tb=e"><img src="images/icons/16/minus.png" alt="delete" title="Delete User (permanent)" class="tipped" /></a>
 					</td>
 				</tr>
 				<?

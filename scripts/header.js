@@ -4,10 +4,10 @@ $( '#title' ).click(function(){
 
 $( '#head_logout' ).hover(
 	function(){
-		$(this).children('img').attr('src', 'images/icons/door-open-out.png');
+		$(this).children('img').attr('src', 'images/icons/16/door-open-out.png');
 	},
 	function(){
-		$(this).children('img').attr('src', 'images/icons/door--arrow.png');
+		$(this).children('img').attr('src', 'images/icons/16/door--arrow.png');
 	}
 );
 

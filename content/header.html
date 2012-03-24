@@ -12,7 +12,7 @@
 				if( $_SESSION['roleid'] < 3 )
 				{
 				?>
-		<a href="users.php"><img src="images/icons/users.png" alt="users" class="icon-fix" />Users</a>
+		<a href="users.php"><img src="images/icons/16/users.png" alt="users" class="icon-fix" />Users</a>
 				<?
 				}
 				
@@ -25,7 +25,7 @@
 		?>
 	</div>
 	<div id="user" class="left-text hide">
-		<a href="logout.php" id="head_logout"><img src="images/icons/door--arrow.png" alt="door" class="icon-fix" />Logout</a>
+		<a href="logout.php" id="head_logout"><img src="images/icons/16/door--arrow.png" alt="door" class="icon-fix" />Logout</a>
 	</div>
 	<nav>
 		<?
@@ -33,9 +33,9 @@
 			{
 				//the logged in toolbar
 				?>
-				<a href="home.php" id="head_dashboard" data-tippedID="menu" class="fixedElementTipped-below"><img src="images/icons/home.png" alt="dashboard" class="icon-fix" />Home</a>
+				<a href="home.php" id="head_dashboard" data-tippedID="menu" class="fixedElementTipped-below"><img src="images/icons/16/home.png" alt="dashboard" class="icon-fix" />Home</a>
 				&nbsp;
-				<a href="account.php" data-tippedID="user" class="fixedElementTipped-below"><img src="images/icons/<?=$tmpl->icon;?>.png" alt="user" class="icon-fix" /><?=$tmpl->user->fullName;?></a>
+				<a href="account.php" data-tippedID="user" class="fixedElementTipped-below"><img src="images/icons/16/<?=$tmpl->icon;?>.png" alt="user" class="icon-fix" /><?=$tmpl->user->fullName;?></a>
 				&nbsp;
 				
 				<?
