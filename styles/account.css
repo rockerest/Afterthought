@@ -22,8 +22,6 @@ legend{
 }
 
 fieldset, legend{
-	-webkit-border-radius: .2em;
-	-moz-border-radius: .2em;
 	border-radius: .2em; 
 }
 
