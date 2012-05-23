@@ -5,7 +5,7 @@ You can see a demo of this package at [afterthought.thomasrandolph.info](http://
 
 There are two files that you need that are not included in this repository for various reasons.
 
-1. the database credentials.  Create a file called `afterthought.conf` and place it in your copy of `backbone` from [my framework](https://github.com/rockerest/myframework) linked above.  
+1. the database credentials.  Create a file called `afterthought.conf` and place it in your copy of `backbone` from [vertebrox](https://github.com/rockerest/vertebrox) linked above.  
   place the following lines in it:  
     `$config['db']['dbname'] = "afterthought";`  
     `$config['db']['user'] = "[YourDatabaseUsername]";`  
