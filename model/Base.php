@@ -1,7 +1,8 @@
 <?php
+	require_once('Config.php');
 	require_once('Database.php');
 	
-	class Base
+	class Base extends Config
 	{
 		public static function connect()
 		{
@@ -17,16 +18,12 @@
 		
 		public function __construct()
 		{
-			$options = file('afterthought.conf', FILE_USE_INCLUDE_PATH);
-			foreach( $options as $conf_entry )
-			{
-				eval($conf_entry);
-			}
+			parent::__construct( '/', 'afterthought.conf' );
 			
-			$this->dbname = $config['db']['dbname'];
-			$this->user = $config['db']['user'];
-			$this->pass = $config['db']['pass'];
-			$this->host = $config['db']['host'];
+			$this->dbname = $this->config['db']['dbname'];
+			$this->user = $this->config['db']['user'];
+			$this->pass = $this->config['db']['pass'];
+			$this->host = $this->config['db']['host'];
 			
 			$this->db = new Database($this->user, $this->pass, $this->dbname, $this->host, 'mysql');
 		}
