@@ -1,11 +1,11 @@
 Aferthought is a php code repository to expediate setting up a new website.
 
-It relies heavily on [my framework](https://github.com/rockerest/myframework).  
+It relies heavily on my toolbox - [vertebrox](https://github.com/rockerest/vertebrox).  
 You can see a demo of this package at [afterthought.thomasrandolph.info](http://afterthought.thomasrandolph.info).
 
 There are two files that you need that are not included in this repository for various reasons.
 
-1. the database credentials.  Create a file called `afterthought.conf` and place it in your copy of `backbone` from [my framework](https://github.com/rockerest/myframework) linked above.  
+1. the database credentials.  Create a file called `afterthought.conf` and place it in your copy of `backbone` from [vertebrox](https://github.com/rockerest/vertebrox) linked above.  
   place the following lines in it:  
     `$config['db']['dbname'] = "afterthought";`  
     `$config['db']['user'] = "[YourDatabaseUsername]";`  
