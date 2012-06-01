@@ -1,41 +1,28 @@
 <?php
 	require_once('Config.php');
 	require_once('Database.php');
-	
+
 	class Base extends Config
 	{
 		public static function connect()
 		{
 			return new Base();
 		}
-		
-		private $dbname;
-		private $user;
-		private $pass;
-		private $host;
-		
+
 		protected $db;
-		
+
 		public function __construct()
 		{
-			parent::__construct( '/', 'afterthought.conf' );
-			
-			$this->dbname = $this->config['db']['dbname'];
-			$this->user = $this->config['db']['user'];
-			$this->pass = $this->config['db']['pass'];
-			$this->host = $this->config['db']['host'];
-			
-			$this->db = new Database($this->user, $this->pass, $this->dbname, $this->host, 'mysql');
+			parent::__construct( DIRECTORY_SEPARATOR, 'afterthought.conf' );
+
+			$this->db = new Database(	$this->config['db']['user'],
+										$this->config['db']['pass'],
+										$this->config['db']['dbname'],
+										$this->config['db']['host'],
+										'mysql'
+									);
 		}
-		
-		public function __get($var)
-		{
-			if( strtolower($var) == 'db' )
-			{
-				return $this->db;
-			}
-		}
-		
+
 		public function sendback($objects)
 		{
 			if( count( $objects ) > 1 )
@@ -51,7 +38,7 @@
 				return false;
 			}
 		}
-		
+
 		public function toArray($objects)
 		{
 			if( is_array($objects) )
