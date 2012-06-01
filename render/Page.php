@@ -5,29 +5,31 @@
 	require_once('Session.php');
 	setSession(0,"/");
 
-    class Page {
+    class Page extends Config{
 		protected $header;
 		protected $footer;
 
 		private $page_title;
 		private $body_id;
-		
+
 		public $self;
 
         public function __construct($page_title, $body_id)
 		{
+			parent::__construct( DIRECTORY_SEPARATOR, 'afterthought.conf' );
+
 			$this->page_title = $page_title;
 			$this->body_id = $body_id;
         }
 
 		public function run()
 		{
-			$this->header = new Header();
+			$this->header = new Header( $this->root );
 			$this->footer = new Footer();
-			
+
 			$this->header->run();
 			$this->footer->run();
-			
+
 			$this->self = $this->header->self;
         }
 
@@ -43,7 +45,7 @@
             return $tmpl->build('page.html');
         }
     }
-	
+
 	function secure($role = 3)
 	{
 		if( !$_SESSION['active'] )
