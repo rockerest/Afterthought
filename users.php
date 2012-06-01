@@ -1,23 +1,29 @@
 <?php
-	set_include_path('backbone:components:content:model:render:scripts:styles:images');
-	
+	$paths = array(
+		'.', 'backbone', 'components', 'content', 'model', 'render', 'scripts', 'styles', 'images'
+	);
+
+	$includePath = implode( PATH_SEPARATOR, $paths );
+	set_include_path( get_include_path() . PATH_SEPARATOR . $includePath );
+
+
 	require_once('Page.php');
 	require_once('Template.php');
 	require_once('User.php');
-	
+
 	$user = User::getByID($_SESSION['userid']);
-	
+
 	secure(2); // only allow admins or staff (roleid <= 2)
 
 	$page = new Page("Users :: Afterthought", 'users');
 	$tmpl = new Template();
-	
+
 	$page->run();
 	$tmpl->self = $page->self;
-	
+
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : -1;
 	$tmpl->users = User::toArray(User::getAll());
-	
+
 	switch( $tmpl->code )
 	{
 		case 0:
@@ -78,11 +84,11 @@
 		default:
 				break;
 	}
-	
+
 	$html = $tmpl->build('users.html');
 	$css = $tmpl->build('users.css');
 	$js = $tmpl->build('users.js');
-	
+
 	$appContent = array(
 						'html'	=>	$html,
 						'css'	=>	array(	'code' => $css,

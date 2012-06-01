@@ -1,14 +1,20 @@
 <?php
-	set_include_path('backbone:components:content:model:render:scripts:styles:images');
+	$paths = array(
+		'.', 'backbone', 'components', 'content', 'model', 'render', 'scripts', 'styles', 'images'
+	);
+
+	$includePath = implode( PATH_SEPARATOR, $paths );
+	set_include_path( get_include_path() . PATH_SEPARATOR . $includePath );
+
 	require_once('Page.php');
 	$tmpl = new Template();
-	
+
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : 200;
-	
+
 	$page = new Page("HTTP Status " . $tmpl->code . " Page", 'errors');
-	
+
 	$page->run();
-	
+
 	switch( $tmpl->code )
 	{
 		case 404:
@@ -28,11 +34,11 @@
 				$tmpl->alert['message'] = "Oh, you think you're SO sneaky.  Move along, nothing to see here.";
 				break;
 	}
-	
+
 	$html = $tmpl->build('error.html');
 	$css = $tmpl->build('error.css');
 	$js = $tmpl->build('error.js');
-	
+
 	$appContent = array(
 						'html'	=>	$html,
 						'css'	=>	array(	'code' => $css,

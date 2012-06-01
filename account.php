@@ -1,23 +1,28 @@
 <?php
-	set_include_path('backbone:components:content:model:render:scripts:styles:images');
-	
+	$paths = array(
+		'.', 'backbone', 'components', 'content', 'model', 'render', 'scripts', 'styles', 'images'
+	);
+
+	$includePath = implode( PATH_SEPARATOR, $paths );
+	set_include_path( get_include_path() . PATH_SEPARATOR . $includePath );
+
 	require_once('Page.php');
 	require_once('Template.php');
 	require_once('User.php');
 	require_once('Role.php');
-	
+
 	secure(3); //allow roles <=3
-	
+
 	$page = new Page('Account Management :: Afterthought', 'account');
 	$tmpl = new Template();
-	
+
 	$page->run();
 	$tmpl->self = $page->self;
-	
+
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : -1;
 	$userid = isset( $_GET['uid'] ) ? $_GET['uid'] : $_SESSION['userid'];
 	$tmpl->action = isset( $_GET['a'] ) ? $_GET['a'] : 'manage';
-	
+
 	if( $userid == $_SESSION['userid'] )
 	{
 		$user = User::getByID($userid);
@@ -25,7 +30,7 @@
 	else
 	{
 		$attempt = User::getByID($userid);
-		
+
 		if( $tmpl->self->authentication->roleid == 1 )
 		{
 			$user = $attempt;
@@ -35,7 +40,7 @@
 			$user = $tmpl->self;
 		}
 	}
-	
+
 	//form fields
 	$data['fname'] = isset($_GET['fname']) ? ($_GET['fname'] != null ? $_GET['fname'] : ($tmpl->action == 'manage' ? $user->fname : null)) : ($tmpl->action == 'manage' ? $user->fname : null);
 	$data['lname'] = isset($_GET['lname']) ? ($_GET['lname'] != null ? $_GET['lname'] : ($tmpl->action == 'manage' ? $user->lname : null)) : ($tmpl->action == 'manage' ? $user->lname : null);
@@ -43,10 +48,10 @@
 	$data['email'] = isset($_GET['email']) ? ($_GET['email'] != null ? $_GET['email'] : ($tmpl->action == 'manage' ? $user->contact->email : ($tmpl->action == 'login' ? $user->authentication->identity : null))) : ($tmpl->action == 'manage' ? $user->contact->email : ($tmpl->action == 'login' ? $user->authentication->identity : null));
 	$data['phone'] = isset($_GET['phone']) ? ($_GET['phone'] != null ? $_GET['phone'] : ($tmpl->action == 'manage' ? $user->contact->friendlyPhone : null)) : ($tmpl->action == 'manage' ? $user->contact->friendlyPhone : null);
 	//end form fields
-	
+
 	//throwback
 	$tmpl->tb = isset($_GET['tb']) ? $_GET['tb'] : null;
-	
+
 	switch( $tmpl->code )
 	{
 		case 0:
@@ -83,7 +88,7 @@
 		default:
 				break;
 	}
-	
+
 	switch( strtolower($user->gender) )
 	{
 		case 'm':
@@ -96,15 +101,15 @@
 			$tmpl->icon = 'user-silhouette';
 			break;
 	}
-	
+
 	$tmpl->user = $user;
 	$tmpl->data = $data;
 	$tmpl->roles = Role::toArray(Role::getAll());
-	
+
 	$html = $tmpl->build('account.html');
 	$css = $tmpl->build('account.css');
 	$js = $tmpl->build('account.js');
-	
+
 	$appContent = array(
 						'html'	=>	$html,
 						'css'	=>	array(	'code' => $css,

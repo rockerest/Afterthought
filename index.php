@@ -1,23 +1,29 @@
 <?php
-	set_include_path('backbone:components:content:model:render:scripts:styles:images');
-	
+	$paths = array(
+		'.', 'backbone', 'components', 'content', 'model', 'render', 'scripts', 'styles', 'images'
+	);
+
+	$includePath = implode( PATH_SEPARATOR, $paths );
+	set_include_path( get_include_path() . PATH_SEPARATOR . $includePath );
+
+
 	require_once('Page.php');
 	require_once('Template.php');
 
 	$page = new Page("Afterthought", 'index');
 	$tmpl = new Template();
-	
+
 	$page->run();
 	$tmpl->self = $page->self;
-	
+
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : -1;
 	$tmpl->email = isset( $_GET['email'] ) ? $_GET['email'] : null;
 		$tmpl->ve= isset( $_GET['vemail'] ) ? $_GET['vemail'] : null;
 	$tmpl->fname = isset( $_GET['fname'] ) ? $_GET['fname'] : null;
 	$tmpl->lname = isset( $_GET['lname'] ) ? $_GET['lname'] : null;
-	
+
 	$tmpl->a = isset( $_GET['a'] ) ? $_GET['a'] : 'login';
-	
+
 	switch( $tmpl->code )
 	{
 		case 0:
@@ -74,11 +80,11 @@
 		default:
 				break;
 	}
-	
+
 	$html = $tmpl->build('index.html');
 	$css = $tmpl->build('index.css');
 	$js = $tmpl->build('index.js');
-	
+
 	$appContent = array(
 						'html'	=>	$html,
 						'css'	=>	array(	'code' => $css,
