@@ -4,10 +4,8 @@
 	require_once('Role.php');
 	require_once('User.php');
 	
-	class Authentication extends Base
-	{
-		public static function validate($identity, $password)
-		{
+	class Authentication extends Base{
+		public static function validate($identity, $password){
 			$base = new Base();
 						
 			$sql = "SELECT salt FROM authentication WHERE identity=?";
@@ -20,27 +18,22 @@
 			$values = array($identity, $saltPass);
 			$res = $base->db->qwv($sql, $values);
 			
-			if( count($res) != 1 )
-			{
+			if( count($res) != 1 ){
 				return false;
 			}
-			else
-			{
+			else{
 				$user = User::getByID($res[0]['userid']);
 				
-				if( !$user->Authentication->disabled )
-				{
+				if( !$user->Authentication->disabled ){
 					return $user;
 				}
-				else
-				{
+				else{
 					return false;
 				}
 			}
 		}
 		
-		public static function checkIdentity($ident)
-		{
+		public static function checkIdentity($ident){
 			$base = new Base();
 			
 			$sql = "SELECT authenticationid FROM authentication WHERE identity=?";
@@ -50,24 +43,20 @@
 			return count($res);
 		}
 		
-		public static function addForUser($id, $ident, $pass, $roleid)
-		{
+		public static function addForUser($id, $ident, $pass, $roleid){
 			$vals = Authentication::hash($pass);
 
 			$auth = new Authentication(null, $ident, $vals[0], $vals[1], $id, $roleid, 0, 0);
 			$save = $auth->save();
-			if( $save )
-			{
+			if( $save ){
 				return $auth;
 			}
-			else
-			{
+			else{
 				return false;
 			}
 		}
 		
-		public static function getByIdentity($ident)
-		{
+		public static function getByIdentity($ident){
 			$base = new Base();
 			
 			$sql = "SELECT * FROM authentication WHERE identity=?";
@@ -77,8 +66,7 @@
 			return Authentication::wrap($res);
 		}
 		
-		public static function getByUserID($id)
-		{
+		public static function getByUserID($id){
 			$base = new Base();
 			
 			$authSQL = "SELECT * FROM authentication WHERE userid=?";
@@ -88,8 +76,7 @@
 			return Authentication::wrap($auth);
 		}
 		
-		public static function disableByUserID($id)
-		{
+		public static function disableByUserID($id){
 			$base = new Base();
 			
 			$sql = "UPDATE authentication SET disabled=1 WHERE userid=?";
@@ -99,8 +86,7 @@
 			return $base->db->stat();
 		}
 		
-		public static function enableByUserID($id)
-		{
+		public static function enableByUserID($id){
 			$base = new Base();
 			
 			$sql = "UPDATE authentication SET disabled=0 WHERE userid=?";
@@ -110,8 +96,7 @@
 			return $base->db->stat();
 		}
 		
-		public static function forcePasswordChangeByUserID($id)
-		{
+		public static function forcePasswordChangeByUserID($id){
 			$base = new Base();
 			
 			$sql = "UPDATE authentication SET resetPassword=1 WHERE userid=?";
@@ -121,8 +106,7 @@
 			return $base->db->stat();
 		}
 		
-		public static function acceptPasswordByUserID($id)
-		{
+		public static function acceptPasswordByUserID($id){
 			$base = new Base();
 			
 			$sql = "UPDATE authentication SET resetPassword=0 WHERE userid=?";
@@ -132,8 +116,7 @@
 			return $base->db->stat();
 		}
 		
-		public static function deleteByUserID($id)
-		{
+		public static function deleteByUserID($id){
 			$base = new Base();
 			
 			$delSQL = "DELETE FROM authentication WHERE userid=?";
@@ -143,11 +126,9 @@
 			return $base->db->stat();
 		}
 	
-		public static function wrap($auths)
-		{
+		public static function wrap($auths){
 			$authList = array();
-			foreach( $auths as $auth )
-			{
+			foreach( $auths as $auth ){
 				array_push($authList, new Authentication($auth['authenticationid'], $auth['identity'], $auth['salt'], $auth['password'], $auth['userid'], $auth['roleid'], $auth['resetPassword'], $auth['disabled']));
 			}
 			
@@ -164,8 +145,7 @@
 		private $roleid;
 		private $userid;
 	
-		public function __construct($id, $ident, $salt, $pass, $userid, $roleid, $reset, $disabled)
-		{
+		public function __construct($id, $ident, $salt, $pass, $userid, $roleid, $reset, $disabled){
 			//initialize the database connection variables
 			parent::__construct();
 			
@@ -180,96 +160,75 @@
 			$this->disabled = $disabled;
 		}
 		
-		public function __get($var)
-		{
-			if( strtolower($var) == 'role' )
-			{
+		public function __get($var){
+			if( strtolower($var) == 'role' ){
 				return Role::getByID($this->roleid);
 			}
-			elseif( strtolower($var) == 'user' )
-			{
+			elseif( strtolower($var) == 'user' ){
 				return User::getByID($this->userid);
 			}
-			else
-			{
+			else{
 				return $this->$var;
 			}
 		}
 		
-		public function __set($name, $value)
-		{
-			if( $name == 'salt' )
-			{
+		public function __set($name, $value){
+			if( $name == 'salt' ){
 				return false;
 			}
-			elseif( $name == 'password' )
-			{
+			elseif( $name == 'password' ){
 				$vals = $this->hash($value);
 				$this->salt = $vals[0];
 				$this->password = $vals[1];
 			}
-			else
-			{
+			else{
 				$this->$name = $value;
 			}
 		}
 		
-		public function save()
-		{
-			if( isset($this->authenticationid) )
-			{
-				if( $this->allSet() )
-				{
+		public function save(){
+			if( isset($this->authenticationid) ){
+				if( $this->allSet() ){
 					$authSQL = "UPDATE authentication SET identity=?, salt=?, password=?, roleid=?, resetPassword=?, disabled=? WHERE authenticationid=? AND userid=?";
 					$values = array($this->identity, $this->salt, $this->password, $this->roleid, $this->resetPassword, $this->disabled, $this->authenticationid, $this->userid);
 					$this->db->qwv($authSQL, $values);
 					
-					if( $this->db->stat() )
-					{
+					if( $this->db->stat() ){
 						return $this;
 					}
-					else
-					{
+					else{
 						return false;
 					}
 				}
-				else
-				{
+				else{
 					return false;
 				}
 			}
-			else
-			{
-				if( $this->allSet() )
-				{
+			else{
+				if( $this->allSet() ){
 					$authSQL = "INSERT INTO authentication (identity, salt, password, userid, roleid, resetPassword, disabled) VALUES (?,?,?,?,?,?,?)";
 					$values = array($this->identity, $this->salt, $this->password, $this->userid, $this->roleid, $this->resetPassword, $this->disabled);
 					$this->db->qwv($authSQL, $values);
 					
-					if( $this->db->stat() )
-					{
+					if( $this->db->stat() ){
 						$this->authenticationid = $this->db->last();
 						return $this;
 					}
-					else
-					{
+					else{
 						return false;
 					}					
 				}
-				else
-				{
+				else{
 					return false;
 				}
 			}
 		}
 		
-		private function allSet()
-		{
+		private function allSet(){
 			return isset($this->identity, $this->salt, $this->password, $this->roleid);
 		}
 		
-		private function hash($pass)
-		{
+		private function hash($pass){
 			$salt = substr(hash('whirlpool',rand(100000000000, 999999999999)), 0, 64);
 			$real_pass = hash('whirlpool', $salt.$pass);
 			

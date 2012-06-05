@@ -4,10 +4,8 @@
 	require_once('Authentication.php');
 	require_once('Contact.php');
 
-	class User extends Base
-	{
-		public static function getByID($id)
-		{
+	class User extends Base{
+		public static function getByID($id){
 			$base = new Base();
 			
 			$sql = "SELECT * FROM users WHERE userid=?";
@@ -17,8 +15,7 @@
 			return User::wrap($user);
 		}
 		
-		public static function getAll()
-		{
+		public static function getAll(){
 			$base = new Base();
 			
 			$sql = "SELECT * FROM users";
@@ -26,24 +23,20 @@
 			
 		}
 		
-		public static function getByAuthenticationIdentity($ident)
-		{
+		public static function getByAuthenticationIdentity($ident){
 			$base = new Base();
 			
 			$auth = Authentication::getByIdentity($ident);
 			
-			if( is_object($auth) )
-			{
+			if( is_object($auth) ){
 				return User::getByID($auth->userid);
 			}
-			else
-			{
+			else{
 				return false;
 			}
 		}
 		
-		public static function getAllWithRestrictions()
-		{
+		public static function getAllWithRestrictions(){
 			$base = new Base();
 			
 			$sql = "SELECT * FROM users WHERE userid IN
@@ -56,17 +49,14 @@
 			
 		}
 		
-		public static function search($term = null)
-		{
+		public static function search($term = null){
 			$base = new Base();
 			
-			if( !$term )
-			{
+			if( !$term ){
 				$sql = "SELECT * FROM users ORDER BY lname ASC, fname ASC";
 				$res = $base->db->q($sql);
 			}
-			else
-			{
+			else{
 				$sql = "SELECT * FROM users WHERE lname LIKE ? OR fname LIKE ? OR CONCAT(fname, ' ', lname) LIKE ? ORDER BY lname ASC, fname ASC";
 				$values = array('%' . $term . '%', '%' . $term . '%', '%' . $term . '%');
 				$res = $base->db->qwv($sql, $values);
@@ -75,45 +65,36 @@
 			return User::wrap($res);
 		}
 		
-		public static function add($fname, $lname, $identity, $pass, $roleid)
-		{
+		public static function add($fname, $lname, $identity, $pass, $roleid){
 			$okay = Authentication::checkIdentity($identity);
 			
-			if( $okay === 0 )
-			{
+			if( $okay === 0 ){
 				$user = new User(null, $fname, $lname, null);
 				$res = $user->save();
 
-				if( $res )
-				{
+				if( $res ){
 					$auth = Authentication::addForUser($res->userid, $identity, $pass, $roleid);
 					$cont = Contact::addForUserID($res->userid, $identity);
 					
-					if( $auth && $cont )
-					{
+					if( $auth && $cont ){
 						return $res;
 					}
-					else
-					{
-						if( User::deleteByID($res->userid) )
-						{
+					else{
+						if( User::deleteByID($res->userid) ){
 							return false;
 						}
-						else
-						{
+						else{
 							//you are just totally screwed
 						}
 					}
 				}
 			}
-			else
-			{
+			else{
 				return false;
 			}
 		}
 		
-		public static function deleteByID($userid)
-		{
+		public static function deleteByID($userid){
 			$base = new Base();
 			
 			//save everything in case we need to put them back in.
@@ -128,14 +109,11 @@
 			$values = array($userid);
 			$base->db->qwv($sql, $values);
 			
-			if( $base->db->stat() )
-			{
+			if( $base->db->stat() ){
 				return $base->db->stat();
 			}
-			else
-			{
-				foreach( $contact as $con )
-				{
+			else{
+				foreach( $contact as $con ){
 					$con->contactid = null;
 					$con->save();
 				}
@@ -147,11 +125,9 @@
 			}
 		}
 		
-		public static function wrap($users)
-		{
+		public static function wrap($users){
 			$userList = array();
-			foreach( $users as $user )
-			{
+			foreach( $users as $user ){
 				array_push($userList, new User($user['userid'], $user['fname'], $user['lname'], $user['gender']));
 			}
 			
@@ -163,8 +139,7 @@
 		private $lname;
 		private $gender;
 		
-		public function __construct($userid, $fname, $lname, $gender)
-		{
+		public function __construct($userid, $fname, $lname, $gender){
 			//initialize the database connection variables
 			parent::__construct();
 			
@@ -174,51 +149,40 @@
 			$this->gender = $gender;
 		}
 		
-		public function __get($var)
-		{
-			if( strtolower($var) == 'authentication' )
-			{
+		public function __get($var){
+			if( strtolower($var) == 'authentication' ){
 				return Authentication::getByUserID($this->userid);
 			}
-			elseif( strtolower($var) == 'contact' )
-			{
+			elseif( strtolower($var) == 'contact' ){
 				return Contact::getByUserID($this->userid);
 			}
-			elseif( strtolower($var) == 'fullname' )
-			{
+			elseif( strtolower($var) == 'fullname' ){
 				return $this->fname . " " . $this->lname;
 			}
-			else
-			{
+			else{
 				return $this->$var;
 			}
 		}
 		
-		public function __set($var, $val)
-		{
+		public function __set($var, $val){
 			$this->$var = $val;
 		}
 		
-		public function save()
-		{
-			if( !isset($this->userid) )
-			{
+		public function save(){
+			if( !isset($this->userid) ){
 				$sql = "INSERT INTO users (fname, lname, gender) VALUES(?,?,?)";
 				$values = array($this->fname, $this->lname, $this->gender);
 				$this->db->qwv($sql, $values);
 				
-				if( $this->db->stat() )
-				{
+				if( $this->db->stat() ){
 					$this->userid = $this->db->last();
 					return $this;
 				}
-				else
-				{
+				else{
 					return false;
 				}
 			}
-			else
-			{
+			else{
 				$userSQL = "UPDATE users SET fname=?, lname=?, gender=? WHERE userid=?";
 				$values = array ($this->fname, $this->lname, $this->gender, $this->userid);
 				$this->db->qwv($userSQL, $values);

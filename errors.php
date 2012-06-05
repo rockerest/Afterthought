@@ -15,8 +15,7 @@
 
 	$page->run();
 
-	switch( $tmpl->code )
-	{
+	switch( $tmpl->code ){
 		case 404:
 				// Page or File Not Found
 				$tmpl->alert['type'] = "error";

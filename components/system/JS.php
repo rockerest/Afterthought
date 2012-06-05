@@ -5,8 +5,7 @@
 	preg_match_all('#[\w\.]+#', $q, $files);
 	$content = '';
 	
-	foreach ($files[0] as $fn)
-	{
+	foreach ($files[0] as $fn){
 		$filename = $fn . ".js";		
 		$folders = array(
 							"../../global/",
@@ -16,10 +15,8 @@
 							"../../jquery/",
 							"../../scripts/"
 						);
-		foreach ( $folders as $folder )
-		{
-			if ( file_exists($folder . $filename) )
-			{
+		foreach ( $folders as $folder ){
+			if ( file_exists($folder . $filename) ){
 				$content .= file_get_contents($folder . $filename);
 			}
 		}

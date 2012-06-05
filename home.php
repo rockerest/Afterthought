@@ -21,8 +21,7 @@
 
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : -1;
 
-	switch( $tmpl->code )
-	{
+	switch( $tmpl->code ){
 		case 0:
 				// user logged in successfully
 				$tmpl->alert['type'] = "okay fadeout"; //style the messagebox AND target it to fade out.

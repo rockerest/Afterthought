@@ -1,18 +1,14 @@
 <?php
 	require_once('Template.php');
 
-	class Footer
-	{
-		public function __construct()
-		{
+	class Footer{
+		public function __construct(){
 		}
 		
-		public function run()
-		{
+		public function run(){
 		}
 		
-		public function generate()
-		{
+		public function generate(){
 			$tmpl = new Template();
 			
 			$css = $tmpl->build('footer.css');

@@ -23,20 +23,16 @@
 	$userid = isset( $_GET['uid'] ) ? $_GET['uid'] : $_SESSION['userid'];
 	$tmpl->action = isset( $_GET['a'] ) ? $_GET['a'] : 'manage';
 
-	if( $userid == $_SESSION['userid'] )
-	{
+	if( $userid == $_SESSION['userid'] ){
 		$user = User::getByID($userid);
 	}
-	else
-	{
+	else{
 		$attempt = User::getByID($userid);
 
-		if( $tmpl->self->authentication->roleid == 1 )
-		{
+		if( $tmpl->self->authentication->roleid == 1 ){
 			$user = $attempt;
 		}
-		else
-		{
+		else{
 			$user = $tmpl->self;
 		}
 	}
@@ -52,8 +48,7 @@
 	//throwback
 	$tmpl->tb = isset($_GET['tb']) ? $_GET['tb'] : null;
 
-	switch( $tmpl->code )
-	{
+	switch( $tmpl->code ){
 		case 0:
 				// Account updated successfully
 				$tmpl->alert['type'] = "okay";
@@ -89,8 +84,7 @@
 				break;
 	}
 
-	switch( strtolower($user->gender) )
-	{
+	switch( strtolower($user->gender) ){
 		case 'm':
 			$tmpl->icon = 'user';
 			break;

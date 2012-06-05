@@ -12,12 +12,10 @@
 	require_once('Session.php');
 	setSession(0, '/');
 
-	if( !$_SESSION['active'] )
-	{
+	if( !$_SESSION['active'] ){
 		header('Location: /index.php?code=2');
 	}
-	elseif( $_SESSION['roleid'] > 2 )
-	{
+	elseif( $_SESSION['roleid'] > 2 ){
 		header('Location: /index.php?code=2');
 	}
 
@@ -26,8 +24,7 @@
 	$tb = isset($_GET['tb']) ? $_GET['tb'] : null;
 
 	//determine return script
-	switch( $tb )
-	{
+	switch( $tb ){
 		case 'u':
 			$return = 'users';
 			break;
@@ -36,28 +33,22 @@
 			break;
 	}
 
-	if( $uid )
-	{
+	if( $uid ){
 		$user = User::getByID($uid);
 	}
-	else
-	{
+	else{
 		$user = false;
 	}
 
-	if( $_SESSION['roleid'] == 1 )
-	{
-		if( User::deleteByID($user->userid) )
-		{
+	if( $_SESSION['roleid'] == 1 ){
+		if( User::deleteByID($user->userid) ){
 			header('Location: /' . $return . '.php?code=3');
 		}
-		else
-		{
+		else{
 			header('Location: /' . $return . '.php?code=4&ec=CASCADE_DELETE_FAIL--' . $user->userid);
 		}
 	}
-	else
-	{
+	else{
 		header('Location: /index.php?code=2');
 	}
 ?>

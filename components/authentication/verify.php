@@ -14,11 +14,9 @@
 
 	$code = isset($_GET['code']) ? $_GET['code'] : null;
 
-	if( $code )
-	{
+	if( $code ){
 		$ql = Quick_Login::getByHash($code);
-		if( $ql )
-		{
+		if( $ql ){
 			$user = User::getByID($ql->userid);
 			$user->disabled = 0;
 			$user->save();
@@ -32,13 +30,11 @@
 
 			throw new RedirectBrowserException("/home.php?code=0");
 		}
-		else
-		{
+		else{
 			throw new RedirectBrowserException('/index.php?code=9');
 		}
 	}
-	else
-	{
+	else{
 		throw new RedirectBrowserException('/index.php?code=9');
 	}
 ?>

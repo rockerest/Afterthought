@@ -2,17 +2,14 @@
 	require_once('Config.php');
 	require_once('Database.php');
 
-	class Base extends Config
-	{
-		public static function connect()
-		{
+	class Base extends Config{
+		public static function connect(){
 			return new Base();
 		}
 
 		protected $db;
 
-		public function __construct()
-		{
+		public function __construct(){
 			parent::__construct( DIRECTORY_SEPARATOR, 'afterthought.conf' );
 
 			$this->db = new Database(	$this->config['db']['user'],
@@ -23,34 +20,26 @@
 									);
 		}
 
-		public function sendback($objects)
-		{
-			if( count( $objects ) > 1 )
-			{
+		public function sendback($objects){
+			if( count( $objects ) > 1 ){
 				return $objects;
 			}
-			elseif( count( $objects ) == 1 )
-			{
+			elseif( count( $objects ) == 1 ){
 				return $objects[0];
 			}
-			else
-			{
+			else{
 				return false;
 			}
 		}
 
-		public function toArray($objects)
-		{
-			if( is_array($objects) )
-			{
+		public function toArray($objects){
+			if( is_array($objects) ){
 				return $objects;
 			}
-			elseif( is_object($objects) )
-			{
+			elseif( is_object($objects) ){
 				return array($objects);
 			}
-			else
-			{
+			else{
 				return array();
 			}
 		}

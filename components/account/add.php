@@ -11,12 +11,10 @@
 	require_once('Session.php');
 	setSession(0, '/');
 
-	if( !$_SESSION['active'] )
-	{
+	if( !$_SESSION['active'] ){
 		header('Location: /index.php?code=2');
 	}
-	elseif( $_SESSION['roleid'] > 2 )
-	{
+	elseif( $_SESSION['roleid'] > 2 ){
 		header('Location: /index.php?code=2');
 	}
 
@@ -32,8 +30,7 @@
 	$tb = isset($_GET['tb']) ? $_GET['tb'] : null;
 
 	//determine return script
-	switch( $tb )
-	{
+	switch( $tb ){
 		case 'u':
 			$return = 'users';
 			break;
@@ -42,20 +39,16 @@
 			break;
 	}
 
-	if( !$data['fname'] || !$data['lname'] || !$data['email'] || !$data['pass'] )
-	{
+	if( !$data['fname'] || !$data['lname'] || !$data['email'] || !$data['pass'] ){
 		array_shift($data);
 		header('Location: /account.php?a=addnew&code=2&' . http_build_query($data));
 	}
-	else
-	{
+	else{
 		$new = User::add($data['fname'], $data['lname'], $data['email'], $data['pass'], $roleid);
-		if( $new )
-		{
+		if( $new ){
 			header('Location: /' . $return . '.php?code=1');
 		}
-		else
-		{
+		else{
 			header('Location: /account.php?a=addnew&code=3&' . http_build_query($data));
 		}
 	}

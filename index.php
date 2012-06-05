@@ -24,8 +24,7 @@
 
 	$tmpl->a = isset( $_GET['a'] ) ? $_GET['a'] : 'login';
 
-	switch( $tmpl->code )
-	{
+	switch( $tmpl->code ){
 		case 0:
 				// user didn't enter one of the two fields
 				$tmpl->alert['type'] = "error";

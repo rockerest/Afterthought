@@ -11,8 +11,7 @@
 
 	$fwd = isset($_GET['fwd']) ? urldecode($_GET['fwd']) : null;
 
-	if( !$fwd )
-	{
+	if( !$fwd ){
 		$fwd = 'index.php?code=4';
 	}
 

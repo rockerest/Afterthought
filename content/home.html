@@ -1,6 +1,5 @@
 <?
-	if( $tmpl->code > -1 )
-	{
+	if( $tmpl->code > -1 ){
 	?>
 <div class="gutter message-box center w75 <?= $tmpl->alert['type']; ?>">
 	<?= $tmpl->alert['message']; ?>
@@ -8,8 +7,7 @@
 	<?
 	}
 	
-	switch( $_SESSION['roleid'] )
-	{
+	switch( $_SESSION['roleid'] ){
 		case 3:
 			?>
 			<div>

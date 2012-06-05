@@ -1,10 +1,8 @@
 <?php
 	require_once('Base.php');
 
-	class Contact extends Base
-	{
-		public static function getByID($id)
-		{
+	class Contact extends Base{
+		public static function getByID($id){
 			$base = new Base();
 			
 			$sql = "SELECT * FROM contact WHERE contactid=?";
@@ -14,8 +12,7 @@
 			return Contact::wrap($cont);
 		}
 		
-		public static function getByUserID($id)
-		{
+		public static function getByUserID($id){
 			$base = new Base();
 			
 			$sql = "SELECT * FROM contact WHERE userid=?";
@@ -25,14 +22,12 @@
 			return Contact::wrap($cont);
 		}
 		
-		public static function addForUserID($id, $email, $phone = null)
-		{
+		public static function addForUserID($id, $email, $phone = null){
 			$cont = new Contact(null, $id, $phone, $email);
 			return $cont->save();
 		}
 		
-		public static function deleteByUserID($userid)
-		{
+		public static function deleteByUserID($userid){
 			$base = new Base();
 			
 			$sql = "DELETE FROM contact WHERE userid=?";
@@ -42,11 +37,9 @@
 			return $base->db->stat();
 		}
 		
-		public static function wrap($contact)
-		{
+		public static function wrap($contact){
 			$contactList = array();
-			foreach( $contact as $cont )
-			{
+			foreach( $contact as $cont ){
 				array_push($contactList, new Contact($cont['contactid'], $cont['userid'], $cont['phone'], $cont['email']));
 			}
 			
@@ -59,8 +52,7 @@
 		private $phone;
 		private $email;
 		
-		public function __construct($contactid, $userid, $phone, $email)
-		{
+		public function __construct($contactid, $userid, $phone, $email){
 			//initialize the database connection variables
 			parent::__construct();
 			
@@ -70,43 +62,34 @@
 			$this->email = $email;
 		}
 		
-		public function __get($var)
-		{
-			if( strtolower($var) == 'friendlyphone' )
-			{
+		public function __get($var){
+			if( strtolower($var) == 'friendlyphone' ){
 				return $this->prettyPhone($this->phone);
 			}
-			else
-			{
+			else{
 				return $this->$var;
 			}
 		}
 		
-		public function __set($var, $val)
-		{
+		public function __set($var, $val){
 			$this->$var = $val;
 		}
 		
-		public function save()
-		{
-			if( !isset($this->contactid) )
-			{
+		public function save(){
+			if( !isset($this->contactid) ){
 				$sql = "INSERT INTO contact (userid, phone, email) VALUES(?,?,?)";
 				$values = array($this->userid, $this->phone, $this->email);
 				$this->db->qwv($sql, $values);
 				
-				if( $this->db->stat() )
-				{
+				if( $this->db->stat() ){
 					$this->contactid = $this->db->last();
 					return $this;
 				}
-				else
-				{
+				else{
 					return false;
 				}
 			}
-			else
-			{
+			else{
 				$sql = "UPDATE contact SET userid=?, phone=?, email=? WHERE contactid=?";
 				$values = array ($this->userid, $this->phone, $this->email, $this->contactid);
 				$this->db->qwv($sql, $values);
@@ -115,25 +98,20 @@
 			}
 		}
 		
-		private function prettyPhone($phone)
-		{
+		private function prettyPhone($phone){
 			$phlen = strlen($phone);			
-			if( $phlen == 10 || $phlen == 11 )
-			{
+			if( $phlen == 10 || $phlen == 11 ){
 				//assume US
-				if( $phlen == 10 )
-				{
+				if( $phlen == 10 ){
 					$pretty = substr($phone, 0, 3) . '-' . substr($phone, 3, 3) . '-' . substr($phone, 6, 4);
 				}
-				elseif( $phlen == 11 )
-				{
+				elseif( $phlen == 11 ){
 					$pretty = '+' . substr($phone, 0, 1) . '-' . substr($phone, 1, 3) . '-' . substr($phone, 4, 3) . '-' . substr($phone, 7, 4);
 				}
 
 				return $pretty;
 			}
-			else
-			{
+			else{
 				//assume International
 				return $phone;
 			}

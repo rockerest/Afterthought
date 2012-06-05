@@ -5,19 +5,16 @@
 	</hgroup>
 	<div id="menu" class="left-text hide">
 		<?
-			if( $tmpl->active )
-			{
+			if( $tmpl->active ){
 			?>
 			<?
-				if( $_SESSION['roleid'] < 3 )
-				{
+				if( $_SESSION['roleid'] < 3 ){
 				?>
 		<a href="users.php"><img src="images/icons/16/users.png" alt="users" class="icon-fix" />Users</a>
 				<?
 				}
 				
-				if( $_SESSION['roleid'] < 2 )
-				{
+				if( $_SESSION['roleid'] < 2 ){
 				?>
 				<?
 				}
@@ -29,8 +26,7 @@
 	</div>
 	<nav>
 		<?
-			if( $tmpl->active )
-			{
+			if( $tmpl->active ){
 				//the logged in toolbar
 				?>
 				<a href="home.php" id="head_dashboard" data-tippedID="menu" class="fixedElementTipped-below"><img src="images/icons/16/home.png" alt="dashboard" class="icon-fix" />Home</a>
@@ -40,8 +36,7 @@
 				
 				<?
 			}
-			else
-			{
+			else{
 				//the not logged in toolbar
 			}
 		?>

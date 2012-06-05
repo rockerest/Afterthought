@@ -2,10 +2,8 @@
 	require_once('Base.php');
 	require_once('User.php');
 	
-	class Quick_Login extends Base
-	{
-		public static function getByHash($hash)
-		{
+	class Quick_Login extends Base{
+		public static function getByHash($hash){
 			$base = new Base();
 			
 			$sql = "SELECT * FROM quick_login WHERE hash=? AND used=0 AND expires>?";
@@ -15,26 +13,21 @@
 			return Quick_Login::wrap($ql);
 		}
 		
-		public static function add($hash, $userid, $expires, $used)
-		{
+		public static function add($hash, $userid, $expires, $used){
 			$ql = new Quick_Login(null, $hash, $userid, $expires, $used);
 			$res = $ql->save();
 			
-			if( $res )
-			{
+			if( $res ){
 				return $res;
 			}
-			else
-			{
+			else{
 				return false;
 			}
 		}
 		
-		public static function wrap($qls)
-		{
+		public static function wrap($qls){
 			$qlList = array();
-			foreach( $qls as $ql )
-			{
+			foreach( $qls as $ql ){
 				array_push($qlList, new Quick_Login($ql['quick_loginid'], $ql['hash'], $ql['userid'], $ql['expires'], $ql['used']));
 			}
 			
@@ -47,8 +40,7 @@
 		private $expires;
 		private $used;
 		
-		public function __construct($quick_loginid, $hash, $userid, $expires, $used)
-		{
+		public function __construct($quick_loginid, $hash, $userid, $expires, $used){
 			//initialize the database connection variables
 			parent::__construct();
 			
@@ -59,40 +51,32 @@
 			$this->used = $used;
 		}
 		
-		public function __get($var)
-		{
-			if( strtolower($var) == 'user' )
-			{
+		public function __get($var){
+			if( strtolower($var) == 'user' ){
 				return User::getByID($this->userid);
 			}
 			return $this->$var;
 		}
 				
-		public function __set($n, $v)
-		{
+		public function __set($n, $v){
 			$this->$n = $v;
 		}
 		
-		public function save()
-		{
-			if( !isset($this->quick_loginid) )
-			{
+		public function save(){
+			if( !isset($this->quick_loginid) ){
 				$sql = "INSERT INTO quick_login (hash, userid, expires, used) VALUES(?,?,?,?)";
 				$values = array($this->hash, $this->userid, $this->expires, $this->used);
 				$this->db->qwv($sql, $values);
 				
-				if( $this->db->stat() )
-				{
+				if( $this->db->stat() ){
 					$this->quick_loginid = $this->db->last();
 					return $this;
 				}
-				else
-				{
+				else{
 					return false;
 				}
 			}
-			else
-			{
+			else{
 				$sql = "UPDATE quick_login SET hash=?, userid=?, expires=?, used=? WHERE quick_loginid=?";
 				$values = array ($this->hash, $this->userid, $this->expires, $this->used, $this->quick_loginid);
 				$this->db->qwv($sql, $values);

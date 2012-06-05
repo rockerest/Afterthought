@@ -15,25 +15,21 @@
 	$password = isset($_POST['password']) ? $_POST['password'] : null;
 	$identity = isset($_POST['email']) ? $_POST['email'] : null;
 
-	if( $password != null && $identity != null )
-	{
+	if( $password != null && $identity != null ){
 		$tmp = Authentication::validate($identity, $password);
 
-		if( $tmp )
-		{
+		if( $tmp ){
 			setSessionVar('active', true);
 			setSessionVar('roleid', $tmp->authentication->role->roleid);
 			setSessionVar('userid', $tmp->userid);
 
 			throw new RedirectBrowserException("/home.php?code=0");
 		}
-		else
-		{
+		else{
 			throw new RedirectBrowserException("/index.php?code=1&email=" . $identity);
 		}
 	}
-	else
-	{
+	else{
 		throw new RedirectBrowserException("/index.php?code=0&email=" . $identity);
 	}
 ?>

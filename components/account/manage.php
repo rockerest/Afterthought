@@ -12,8 +12,7 @@
 	require_once('Session.php');
 	setSession(0, '/');
 
-	if( !$_SESSION['active'] )
-	{
+	if( !$_SESSION['active'] ){
 		header('Location: /index.php?code=2');
 	}
 
@@ -21,13 +20,11 @@
 	$self = User::getByID($_SESSION['userid']);
 	$attempt = User::getByID($userid);
 
-	if( $userid != $_SESSION['userid'] && $_SESSION['roleid'] == 3 )
-	{
+	if( $userid != $_SESSION['userid'] && $_SESSION['roleid'] == 3 ){
 		header('Location: /index.php?code=2');
 	}
 
-	if( $userid != $_SESSION['userid'] )
-	{
+	if( $userid != $_SESSION['userid'] ){
 		$addon = "&uid=" . $userid;
 	}
 
@@ -45,57 +42,46 @@
 	$lemail = isset($_POST['lemail']) ? $_POST['lemail'] : null;
 	$contact = isset($_POST['contact']) ? true : false;
 
-	if( $data['fname'] )
-	{
+	if( $data['fname'] ){
 		$attempt->fname = $data['fname'];
 	}
 
-	if( $data['lname'] )
-	{
+	if( $data['lname'] ){
 		$attempt->lname = $data['lname'];
 	}
 
-	if( $data['gender'] )
-	{
+	if( $data['gender'] ){
 		$attempt->gender = $data['gender'];
 	}
 
-	if( $data['email'] )
-	{
+	if( $data['email'] ){
 		$cont->email = $data['email'];
 	}
 
-	if( $data['phone'] )
-	{
+	if( $data['phone'] ){
 		$cont->phone = preg_replace("/\D/","",$data['phone']);
 	}
 
-	if( $lemail )
-	{
+	if( $lemail ){
 		$auth->identity = $lemail;
-		if( $contact )
-		{
+		if( $contact ){
 			$cont->email = $lemail;
 		}
 	}
 
-	if( $pass && ($pass == $passver) )
-	{
+	if( $pass && ($pass == $passver) ){
 		$auth->password = $pass;
 		$auth->resetPassword = 0;
 	}
-	elseif( $pass )
-	{
+	elseif( $pass ){
 		header('Location: /account.php?a=login&code=4' . $addon);
 		exit();
 	}
 
-	if( $attempt->save() && $cont->save() && $auth->save() )
-	{
+	if( $attempt->save() && $cont->save() && $auth->save() ){
 		header('Location: /account.php?code=0' . $addon);
 	}
-	else
-	{
+	else{
 		//an error occurred during saving.  Probably bad input that wasn't caught above
 		header('Location: /account.php?code=1' . $addon . "&" . http_build_query($data));
 	}

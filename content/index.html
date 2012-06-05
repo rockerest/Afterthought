@@ -1,6 +1,5 @@
 <?
-	if( $tmpl->code > -1 )
-	{
+	if( $tmpl->code > -1 ){
 	?>
 <div class="gutter message-box center w75 <?= $tmpl->alert['type']; ?>">
 	<?= $tmpl->alert['message']; ?>
@@ -8,8 +7,7 @@
 	<?
 	}
 	
-	if( $tmpl->a == 'login' )
-	{
+	if( $tmpl->a == 'login' ){
 	?>
 <form id="login" name="login" action="components/authentication/Login.php" method="POST" autocomplete="off" class="follow">
 	<label for="email">Email Address</label>
@@ -28,14 +26,11 @@
 </p>
 	<?
 	}
-	elseif( $tmpl->a == 'request' )
-	{
-		if( $tmpl->code == -1 || $tmpl->code == 6 )
-		{
+	elseif( $tmpl->a == 'request' ){
+		if( $tmpl->code == -1 || $tmpl->code == 6 ){
 			$verify = 'hide';
 		}
-		else
-		{
+		else{
 			$verify = '';
 		}
 	?>
@@ -46,8 +41,7 @@
 	<input type="email" name="email" id="email" placeholder="Type your email address here" value="<?= $tmpl->email; ?>" required="required" />
 	<br />
 	<?
-		if( $tmpl->code > 4 || $tmpl->code == -1 )
-		{
+		if( $tmpl->code > 4 || $tmpl->code == -1 ){
 		?>
 	<div id="verify_email" class="<?=$verify;?>">
 		<label for="vemail">Email Address Again</label>
@@ -63,8 +57,7 @@
 	<input type="password" name="password" id="password" placeholder="Type your password here" required="required" />
 	<br />
 	<?
-		if( $tmpl->code > 4 || $tmpl->code == -1 )
-		{
+		if( $tmpl->code > 4 || $tmpl->code == -1 ){
 		?>
 	<div id="verify_password" class="<?=$verify;?>">
 		<label for="vpass">Password Again</label>

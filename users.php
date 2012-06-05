@@ -24,8 +24,7 @@
 	$tmpl->code = isset( $_GET['code'] ) ? $_GET['code'] : -1;
 	$tmpl->users = User::toArray(User::getAll());
 
-	switch( $tmpl->code )
-	{
+	switch( $tmpl->code ){
 		case 0:
 				// filler error
 				$tmpl->alert['type'] = "error";

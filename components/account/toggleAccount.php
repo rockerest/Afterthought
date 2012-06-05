@@ -11,8 +11,7 @@
 	require_once('Session.php');
 	setSession(0, '/');
 
-	if( !$_SESSION['active'] )
-	{
+	if( !$_SESSION['active'] ){
 		header('Location: /index.php?code=2');
 	}
 
@@ -21,8 +20,7 @@
 	$tb = isset($_GET['tb']) ? $_GET['tb'] : null;
 
 	//determine return script
-	switch( $tb )
-	{
+	switch( $tb ){
 		case 'u':
 			$return = 'users';
 			break;
@@ -31,52 +29,40 @@
 			break;
 	}
 
-	if( $uid )
-	{
+	if( $uid ){
 		$user = User::getByID($uid);
 	}
-	else
-	{
+	else{
 		$user = false;
 	}
 
-	if( $self == $user || $_SESSION['roleid'] < 3 )
-	{
-		if( $user->authentication->disabled )
-		{
-			if( enable($user->userid) )
-			{
+	if( $self == $user || $_SESSION['roleid'] < 3 ){
+		if( $user->authentication->disabled ){
+			if( enable($user->userid) ){
 				header('Location: /' . $return . '.php?code=6');
 			}
-			else
-			{
+			else{
 				header('Location: /' . $return . '.php?code=8');
 			}
 		}
-		else
-		{
-			if( disable($user->userid) )
-			{
+		else{
+			if( disable($user->userid) ){
 				header('Location: /' . $return . '.php?code=5');
 			}
-			else
-			{
+			else{
 				header('Location: /' . $return . '.php?code=7');
 			}
 		}
 	}
-	else
-	{
+	else{
 		header('Location: /index.php?code=2');
 	}
 
-	function disable($id)
-	{
+	function disable($id){
 		return Authentication::disableByUserID($id);
 	}
 
-	function enable($id)
-	{
+	function enable($id){
 		return Authentication::enableByUserID($id);
 	}
 ?>
