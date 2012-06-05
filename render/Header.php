@@ -2,36 +2,28 @@
 	require_once('Template.php');
 	require_once('User.php');
 
-	class Header
-	{
+	class Header{
 		public $self;
 
-		public function __construct( $root )
-		{
+		public function __construct( $root ){
 			$this->root = $root;
-			if( isset($_SESSION['active']) )
-			{
+			if( isset($_SESSION['active']) ){
 				$this->self = User::getByID($_SESSION['userid']);
 			}
 		}
 
-		public function run()
-		{
-		}
+		public function run(){}
 
-		public function generate()
-		{
+		public function generate(){
 			$tmpl = new Template();
 
 			$tmpl->active = $active = isset($_SESSION['active']);
 			$rp = 1;
 
-			if( $active )
-			{
+			if( $active ){
 				$tmpl->user = User::getByID($_SESSION['userid']);
 
-				switch( strtolower($tmpl->user->gender) )
-				{
+				switch( strtolower($tmpl->user->gender) ){
 					case 'm':
 						$tmpl->icon = 'user';
 						break;
@@ -63,29 +55,22 @@
 			 */
 
 			$uri = $_SERVER['REQUEST_URI'];
-			$script = $_SERVER['SCRIPT_NAME'];
+			$script = preg_replace('#[/\\\]#', DIRECTORY_SEPARATOR, $_SERVER['SCRIPT_NAME']);
 
-			if( $rp && $active )
-			{
-				if( $uri != $this->root . 'account.php?a=login&code=5' )
-				{
+			if( $rp && $active ){
+				if( $uri != $this->root . 'account.php?a=login&code=5' ){
 					header('Location: account.php?a=login&code=5');
 				}
 			}
-			else
-			{
-				if( $script != $this->root . 'errors.php' )
-				{
-					if( $script != $this->root . 'index.php' && !$active )
-					{
+			else{
+				if( $script != $this->root . 'errors.php' ){
+					if( $script != $this->root . 'index.php' && !$active ){
 						header('Location: index.php?code=2');
 					}
-					elseif( $script == $this->root . 'index.php' && $active )
-					{
+					elseif( $script == $this->root . 'index.php' && $active ){
 						header('Location: home.php');
 					}
-					elseif( $script == $this->root . 'index.php' && !$active )
-					{
+					elseif( $script == $this->root . 'index.php' && !$active ){
 						//allow to go to login or error handler page
 					}
 				}
