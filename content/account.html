@@ -1,6 +1,5 @@
 <?
-	if( $tmpl->code > -1 )
-	{
+	if( $tmpl->code > -1 ){
 	?>
 <div class="gutter message-box center w75 <?= $tmpl->alert['type']; ?>">
 	<?= $tmpl->alert['message']; ?>
@@ -8,8 +7,7 @@
 	<?
 	}
 	
-	if( $tmpl->action == 'manage' )
-	{
+	if( $tmpl->action == 'manage' ){
 		$self = $tmpl->user->userid == $_SESSION['userid'];
 	?>
 <h3 class="bump follow message-box center w50"><img src="images/icons/24/custom/user--pencil.png" alt="" class="icon-fix" /><?=$tmpl->user->fullName;?></h3>
@@ -49,8 +47,7 @@
 </div>
 	<?
 	}
-	elseif( $tmpl->action == 'addnew' )
-	{
+	elseif( $tmpl->action == 'addnew' ){
 	?>
 <h3 class="bump follow message-box center w50"><img src="images/icons/24/custom/user--plus.png" alt="" class="icon-fix" /> New Employee</h3>
 <?
@@ -58,12 +55,9 @@
 	
 	$params = array('gid' => $gid, 'tb' => $tmpl->tb);
 	
-	if( $qs )
-	{
-		foreach( $params as $n => $v )
-		{
-			if( $v )
-			{
+	if( $qs ){
+		foreach( $params as $n => $v ){
+			if( $v ){
 				$qs .= "$n=$v&amp;";
 			}
 		}
@@ -89,18 +83,15 @@
 		<br />
 		<input type="password" id="pass" name="pass" placeholder="Password" />
 		<?
-			if( $_SESSION['roleid'] == 1 )
-			{
+			if( $_SESSION['roleid'] == 1 ){
 		?>
 		<br />
 		<label for="rid">ADMIN: Role Assignment</label>
 		<br />
 		<select name="rid" id="rid">
 		<?
-			if( $tmpl->roles )
-			{
-				foreach( $tmpl->roles as $role )
-				{
+			if( $tmpl->roles ){
+				foreach( $tmpl->roles as $role ){
 				?>
 					<option value="<?=$role->roleid;?>" title="<?=$role->description;?>"><?=$role->name;?></option><?='\n';?>
 				<?
@@ -132,8 +123,7 @@
 </div>
 	<?
 	}
-	elseif( $tmpl->action == 'login' )
-	{
+	elseif( $tmpl->action == 'login' ){
 	?>
 <h3 class="bump follow message-box center w50"><img src="images/icons/24/custom/key--pencil.png" alt="" class="icon-fix" /> Edit Login</h3>
 <form id="account" class="clear center login" method="POST" action="components/account/manage.php?uid=<?=$tmpl->user->userid;?>">

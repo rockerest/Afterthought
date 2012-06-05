@@ -1,6 +1,5 @@
 <?
-	if( $tmpl->code > -1 )
-	{
+	if( $tmpl->code > -1 ){
 		?>
 		<div class="gutter message-box center w75 <?= $tmpl->alert['type']; ?>">
 			<?= $tmpl->alert['message']; ?>
@@ -11,8 +10,7 @@
 
 <h3 class="bump follow message-box center w50"><img src="images/icons/24/custom/users.png" alt="all employees" class="icon-fix" />All Users</h3>
 <?
-	if( $tmpl->users )
-	{
+	if( $tmpl->users ){
 	?>
 	<table class="w60 center">
 		<thead>
@@ -33,13 +31,11 @@
 		</tfoot>
 		<tbody>
 		<?
-			foreach($tmpl->users as $user)
-			{
+			foreach($tmpl->users as $user){
 				$elevate = ($user->authentication->roleid == 3) ? true : false;
 				$reduce = ($user->authentication->roleid == 2) ? true : false;
 				
-				if( $_SESSION['roleid'] == 1 )
-				{
+				if( $_SESSION['roleid'] == 1 ){
 					$elevate = true;
 					$reduce = true;
 				}
@@ -58,23 +54,19 @@
 						<a href="account.php?uid=<?=$user->userid;?>"><img src="images/icons/16/pencil.png" alt="edit" title="Edit User" class="tipped" /></a>
 						<a href="components/account/toggleAccount.php?uid=<?=$user->userid;?>&amp;tb=e">
 						<?
-						if( !$user->authentication->disabled )
-						{
+						if( !$user->authentication->disabled ){
 							print '<img src="images/icons/16/door-open.png" alt="disable" title="Disable Login" class="tipped" /></a>';
 						}
-						else
-						{
+						else{
 							print '<img src="images/icons/16/door.png" alt="enable" title="Enable Login" class="tipped" /></a>';
 						}
 						?>
 						<a href="components/account/toggleResetPassword.php?uid=<?=$user->userid;?>&amp;tb=e">
 						<?
-						if( !$user->authentication->resetPassword )
-						{
+						if( !$user->authentication->resetPassword ){
 							print '<img src="images/icons/16/tick-button.png" alt="reset" title="Force Password Change" class="tipped" /></a>';
 						}
-						else
-						{
+						else{
 							print '<img src="images/icons/16/exclamation-button.png" alt="reset" title="Accept Current Password" class="tipped" /></a>';
 						}
 						?>
@@ -90,8 +82,7 @@
 	</table>
 	<?
 	}
-	else
-	{
+	else{
 	?>
 	<p>No employees found</p>
 	<?
