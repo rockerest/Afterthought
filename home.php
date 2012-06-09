@@ -45,5 +45,5 @@
 										)
 						);
 
-	print $page->build($appContent);
+	echo $page->build($appContent);
 ?>

@@ -4,17 +4,19 @@
 	$q = isset($_GET['q']) ? $_GET['q'] : null;
 	preg_match_all('#[\w\.]+#', $q, $files);
 	$content = '';
-	
+
 	foreach ($files[0] as $fn){
-		$filename = $fn . ".css";		
+		$filename = $fn . ".css";
+
+		$home = implode( DIRECTORY_SEPARATOR, array_slice( explode(DIRECTORY_SEPARATOR, $_SERVER["SCRIPT_FILENAME"]), 0, -3 ) ) . '/';
 		$folders = array(
-							"../../global/",
-							"../../global/css3buttons/",
-							"../../global/blackbird/",
-							"../../global/tipped/",
-							"../../global/fullcalendar/",
-							"../../styles/",
-							"../../jquery/"
+							$home . "global/",
+							$home . "global/css3buttons/",
+							$home . "global/blackbird/",
+							$home . "global/tipped/",
+							$home . "global/fullcalendar/",
+							$home . "styles/",
+							$home . "jquery/"
 						);
 		foreach ( $folders as $folder ){
 			if ( file_exists($folder . $filename) ){
@@ -23,6 +25,6 @@
 		}
 		$content .= "\n\n";
 	}
-	
-	print $content;
+
+	echo $content;
 ?>

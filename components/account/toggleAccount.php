@@ -1,9 +1,10 @@
 <?php
+	$home = implode( DIRECTORY_SEPARATOR, array_slice( explode(DIRECTORY_SEPARATOR, $_SERVER["SCRIPT_FILENAME"]), 0, -3 ) ) . '/';
 	$paths = array(
-		'.', '../../backbone', '../../components', '../../content', '../../model', '../../render', '../../scripts', '../../styles', '../../images'
+		'.', 'backbone', 'components', 'content', 'model', 'render', 'scripts', 'styles', 'images'
 	);
 
-	$includePath = implode( PATH_SEPARATOR, $paths );
+	$includePath = implode( PATH_SEPARATOR . $home, $paths );
 	set_include_path( get_include_path() . PATH_SEPARATOR . $includePath );
 
 	require_once('User.php');

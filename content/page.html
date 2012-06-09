@@ -6,9 +6,9 @@
 
 		<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 		<link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
-		
+
 		<link rel="stylesheet" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css">
-		
+
 		<?php
 			$cssLinks = array(
 								"global",
@@ -20,32 +20,32 @@
 								$tmpl->appContent['css']['link'],
 								$tmpl->footerContent['css']['link']
 							);
-							
+
 			$css = implode(",", $cssLinks);
 		?>
-			
-		<link rel="stylesheet" href="components/system/CSS.php?q=<?= $css; ?>" />
+
+		<link rel="stylesheet" href="components/system/CSS.php?q=<?php echo $css; ?>" />
 		<title>
-			<?=$tmpl->title; ?>
-		</title>		
+			<?php echo $tmpl->title; ?>
+		</title>
 	</head>
 
-	<body id="<?=$tmpl->id;?>">
+	<body id="<?php echo $tmpl->id;?>">
 		<div id="sticky-wrap">
 			<header>
-				<?= $tmpl->headerContent['html'] ."\n"; ?>
+				<?php echo $tmpl->headerContent['html'] ."\n"; ?>
 			</header>
-			
+
 			<div id="page" class="clear">
 				<section id="content" class="center">
-					<?= $tmpl->appContent['html'] . "\n"; ?>
+					<?php echo $tmpl->appContent['html'] . "\n"; ?>
 				</section>
 			</div>
-			
+
 			<div id="push"></div>
 		</div>
 		<footer>
-			<?= $tmpl->footerContent['html'] ."\n"; ?>
+			<?php echo $tmpl->footerContent['html'] ."\n"; ?>
 		</footer>
 		<noscript>
 			<div id="nojs" style="display: block;">
@@ -56,11 +56,11 @@
 		</noscript>
 
 		<!-- External Scripts -->
-		<?
-			include_once('jquery/jQuery.php'); 
+		<?php
+			include_once('jquery/jQuery.php');
 			$jq = new jQuery();
-			print $jq->all;
-			
+			echo $jq->all;
+
 			$jsLinks = array(
 								"global",
 								"jquery.ui.custom.min",
@@ -72,10 +72,10 @@
 								$tmpl->appContent['js']['link'],
 								$tmpl->footerContent['js']['link']
 							);
-							
+
 			$js = implode(",", $jsLinks);
 		?>
-		
-		<script src="components/system/JS.php?q=<?= $js; ?>"></script>
+
+		<script src="components/system/JS.php?q=<?php echo $js; ?>"></script>
 	</body>
 </html>
