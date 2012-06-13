@@ -1,3 +1,8 @@
+THIS REPO IS DEPRECATED.
+========================
+This repository has been deprecated and merged into [nox](https://github.com/rockerest/nox).
+--------------------------------------------------------------------------------------------
+
 Aferthought is a php code repository to expediate setting up a new website.
 
 It relies heavily on my toolbox - [vertebrox](https://github.com/rockerest/vertebrox).  
